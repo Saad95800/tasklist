@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function FormSup({arrays, deleteTable}){
+export default function FormSup({arrays, deleteTable, closeFormDeleteArray}){
 
     const [idArray, setIdArray] = useState(1)
 
@@ -22,6 +22,10 @@ export default function FormSup({arrays, deleteTable}){
                 <input type="submit" className="btn btn-danger" value="Supprimer"/>
             </div>
         </div>
+        <button type="button" className="btn-close" aria-label="Close" onClick={()=>{
+                closeFormDeleteArray()
+            }}></button>  
+        
         </form>
     )
 }

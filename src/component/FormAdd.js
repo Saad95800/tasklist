@@ -24,7 +24,7 @@ export default function FormAdd({addTable, closeFormAddArray}){
                 </div>
             </div>
             </form>     
-            <button type="button" class="btn-close" aria-label="Close" onClick={()=>{
+            <button type="button" className="btn-close" aria-label="Close" onClick={()=>{
                 closeFormAddArray()
             }}></button>   
         </>

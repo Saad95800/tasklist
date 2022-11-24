@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function FormAddTask({arrays, addTask}){
+export default function FormAddTask({arrays, addTask, closeFormAddTask}){
 
     const [task, setTask] = useState('')
     const [idArray, setIdArray] = useState(1)
@@ -29,6 +29,10 @@ export default function FormAddTask({arrays, addTask}){
                 </div>
                 <input type="submit" value="Ajouter une tâche" /> 
             </form>
+            <button type="button" className="btn-close" aria-label="Close" onClick={()=>{
+                closeFormAddTask()
+            }}></button> 
+            
         </div>
     )
 

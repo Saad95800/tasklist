@@ -59,6 +59,8 @@ export default function Container(){
     ])
 
     const [displayFormAddArray, setDisplayFormAddArray] = useState(false)
+    const [displayFormDeleteArray, setDisplayFormDeleteArray] = useState(false)
+    const [displayFormAddTask, setDisplayFormAddTask] = useState(false)
 
     const addTable = (title) => {
         let newArrays = [...arrays]
@@ -127,23 +129,34 @@ export default function Container(){
     const closeFormAddArray = () =>{
         setDisplayFormAddArray(false)
     }
+    const closeFormDeleteArray = () =>{
+        setDisplayFormDeleteArray(false)
+    }
+    const closeFormAddTask = () =>{
+        setDisplayFormAddTask(false)
+    }
 
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
             <Link to="/login" className="btn btn-primary">Login</Link>
             <div className="d-flex">
+
             <div className='btn btn-info' onClick={()=>{
                 setDisplayFormAddArray(true)
             }} >Ajouter un tableau</div>
-                {(()=>{
-                    if(displayFormAddArray){
-                        return <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />
-                    }
-                })()}
-                
-                <FormSup arrays={arrays} deleteTable={deleteTable} />
-                <FormAddTask arrays={arrays} addTask={addTask} />
+
+            <div className='btn btn-info' onClick={()=>{
+                setDisplayFormDeleteArray(true)
+            }} >Supprimer un tableau</div>
+
+            <div className='btn btn-info' onClick={()=>{
+                setDisplayFormAddTask(true)
+            }} >Ajouter une tâche</div>
+            
+                {displayFormAddArray && <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />}
+                {displayFormDeleteArray && <FormSup arrays={arrays} deleteTable={deleteTable} closeFormDeleteArray={closeFormDeleteArray} />}
+                {displayFormAddTask && <FormAddTask arrays={arrays} addTask={addTask} closeFormAddTask={closeFormAddTask}/>}
             </div>
             <div className="d-flex">
                 {arrays.map((array, index)=>{
