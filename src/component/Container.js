@@ -105,6 +105,23 @@ export default function Container(){
 
     }
 
+    const deleteTask = (id_task) => {
+        
+        let newArray = [...arrays]
+
+        for(let array of newArray){
+            let newTasks = []
+            for(let task of array.tasks){
+                if(task.id.toString() !== id_task.toString()){
+                    newTasks.push(task)
+                }
+            }
+            array.tasks = newTasks
+        }
+
+        setArrays(newArray)
+    }
+
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
@@ -116,7 +133,7 @@ export default function Container(){
             </div>
             <div className="d-flex">
                 {arrays.map((array, index)=>{
-                    return <Array key={index} data={array} />
+                    return <Array key={index} data={array} deleteTask={deleteTask} />
                 })}
             </div>
         </div>
