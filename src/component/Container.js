@@ -4,6 +4,7 @@ import FormAdd from './FormAdd'
 import FormSup from './FormSup'
 import { v4 as uuidv4 } from 'uuid';
 import FormAddTask from './FormAddTask'
+import {Link} from 'react-router-dom'
 
 export default function Container(){
 
@@ -106,6 +107,8 @@ export default function Container(){
 
     return (
         <div className="container">
+            <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
+            <Link to="/login" className="btn btn-primary">Login</Link>
             <div className="d-flex">
                 <FormAdd addTable={addTable} />
                 <FormSup arrays={arrays} deleteTable={deleteTable} />
