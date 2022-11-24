@@ -58,6 +58,8 @@ export default function Container(){
         }
     ])
 
+    const [displayFormAddArray, setDisplayFormAddArray] = useState(false)
+
     const addTable = (title) => {
         let newArrays = [...arrays]
         newArrays.push({
@@ -122,12 +124,24 @@ export default function Container(){
         setArrays(newArray)
     }
 
+    const closeFormAddArray = () =>{
+        setDisplayFormAddArray(false)
+    }
+
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
             <Link to="/login" className="btn btn-primary">Login</Link>
             <div className="d-flex">
-                <FormAdd addTable={addTable} />
+            <div className='btn btn-info' onClick={()=>{
+                setDisplayFormAddArray(true)
+            }} >Ajouter un tableau</div>
+                {(()=>{
+                    if(displayFormAddArray){
+                        return <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />
+                    }
+                })()}
+                
                 <FormSup arrays={arrays} deleteTable={deleteTable} />
                 <FormAddTask arrays={arrays} addTask={addTask} />
             </div>
