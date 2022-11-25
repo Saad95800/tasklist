@@ -248,14 +248,29 @@ export default function Container(){
 
         for(let array of newArrays){
             
-            // le tableau qui a l'id id_array_drag prend le order order_array_drop
-            // Les tableaux d'order inférieur à order_array_drop et supérieur à order_array_drag on leur order qui fait -1
-            if(array.id.toString() === id_array_drag.toString()){
-                array.order = Number(order_array_drop)
-            }else if(array.id.toString() === id_array_drop.toString()){
-                array.order = array.order - 1
-            }else if(Number(array.order) < Number(order_array_drop) && Number(array.order) > Number(order_array_drag)){
-                array.order = array.order - 1
+            // Si l'order du tableau de drop est suppérieur à l'order du tableau de drag
+
+            if(Number(order_array_drop > Number(order_array_drag))){
+                // le tableau qui a l'id id_array_drag prend le order order_array_drop
+                // Les tableaux d'order inférieur à order_array_drop et supérieur à order_array_drag on leur order qui fait -1
+                if(array.id.toString() === id_array_drag.toString()){
+                    array.order = Number(order_array_drop)
+                }else if(array.id.toString() === id_array_drop.toString()){
+                    array.order = array.order - 1
+                }else if(Number(array.order) < Number(order_array_drop) && Number(array.order) > Number(order_array_drag)){
+                    array.order = array.order - 1
+                }      
+                // Si l'order du tableau de drop est inférieur à l'order du tableau de drag          
+            }else if(Number(order_array_drop < Number(order_array_drag))){
+                // le tableau qui a l'id id_array_drag prend le order order_array_drop
+                // Les tableaux d'order suppérieur à order_array_drop et inférieur à order_array_drag on leur order qui fait -1
+                if(array.id.toString() === id_array_drag.toString()){
+                    array.order = Number(order_array_drop)
+                }else if(array.id.toString() === id_array_drop.toString()){
+                    array.order = array.order + 1
+                }else if(Number(array.order) > Number(order_array_drop) && Number(array.order) < Number(order_array_drag)){
+                    array.order = array.order + 1
+                }  
             }
             
 
