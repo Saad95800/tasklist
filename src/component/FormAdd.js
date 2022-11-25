@@ -5,7 +5,7 @@ export default function FormAdd({addTable, closeFormAddArray}){
     const [title, setTile] = useState('')
 
     return(
-        <>
+        <div className="container-form-add-array">
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(title.length > 0){
@@ -27,6 +27,6 @@ export default function FormAdd({addTable, closeFormAddArray}){
             <button type="button" className="btn-close" aria-label="Close" onClick={()=>{
                 closeFormAddArray()
             }}></button>   
-        </>
+        </div>
     )
 }
