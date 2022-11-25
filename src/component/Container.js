@@ -136,6 +136,27 @@ export default function Container(){
         setDisplayFormAddTask(false)
     }
 
+    const getTaskById = (id_task) => {
+        let taskToMove = {}
+
+        for(let array of arrays){
+            for(let task of array.tasks){
+                if(task.id.toString() === id_task.toString()){
+                    taskToMove = task
+                }
+            }
+        }
+        console.log(taskToMove)
+        return taskToMove
+
+    }
+    
+    const moveTask = (id_task, id_array) => {
+        let taskToMove = getTaskById(id_task)
+        deleteTask(id_task)
+        addTask(taskToMove.intitule, id_array)
+    }
+
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
@@ -160,7 +181,7 @@ export default function Container(){
             </div>
             <div className="d-flex">
                 {arrays.map((array, index)=>{
-                    return <Array key={index} data={array} deleteTask={deleteTask} />
+                    return <Array key={index} data={array} deleteTask={deleteTask} moveTask={moveTask} />
                 })}
             </div>
         </div>
