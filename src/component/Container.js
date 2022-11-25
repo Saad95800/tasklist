@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import FormAddTask from './FormAddTask'
 import {Link} from 'react-router-dom'
 import FormEditTask from './FormEditTask';
+import FormEditArray from './FormEditArray'
 
 export default function Container(){
 
@@ -56,10 +57,6 @@ export default function Container(){
             id: 4,
             title: 'En cours',
             tasks: [
-                {
-                    id: 17,
-                    intitule: 'ssssssssssssssss'
-                }
             ]
         }
     ])
@@ -68,7 +65,22 @@ export default function Container(){
     const [displayFormDeleteArray, setDisplayFormDeleteArray] = useState(false)
     const [displayFormAddTask, setDisplayFormAddTask] = useState(false)
     const [displayFormEditTask, setDisplayFormEditTask] = useState(false)
+    const [displayFormEditArray, setDisplayFormEditArray] = useState(false)
+
     const [taskToEdit, setTaskToEdit] = useState(null)
+    const [arrayToEdit, setArrayToEdit] = useState(null)
+
+    const displayFormArray = (id_array, title_array) => {
+        setArrayToEdit({
+            id: id_array,
+            title: title_array
+        })
+        setDisplayFormEditArray(true)
+    }
+
+    const closeFromEditTask = () => {
+        setDisplayFormEditTask(false)
+    }
 
     const updateTask = (id_task, intitule) => {
         // On modifie dans le state la tâche
@@ -189,6 +201,25 @@ export default function Container(){
         addTask(taskToMove.intitule, id_array)
     }
 
+    const closeFromEditArray = () => {
+        setDisplayFormEditArray(false)
+    }
+
+    const updateArray = (id_array, title_array) => {
+
+        let newArrays = [...arrays]
+
+        for(let array of newArrays){
+            if(array.id.toString() === id_array.toString()){
+                array.title = title_array
+            }
+        }
+
+        setArrays(newArrays)
+        setDisplayFormEditArray(false)
+
+    }
+
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
@@ -210,11 +241,19 @@ export default function Container(){
                 {displayFormAddArray && <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />}
                 {displayFormDeleteArray && <FormSup arrays={arrays} deleteTable={deleteTable} closeFormDeleteArray={closeFormDeleteArray} />}
                 {displayFormAddTask && <FormAddTask arrays={arrays} addTask={addTask} closeFormAddTask={closeFormAddTask}/>}
-                {displayFormEditTask && <FormEditTask task={taskToEdit} updateTask={updateTask} />}
+                {displayFormEditTask && <FormEditTask task={taskToEdit} updateTask={updateTask} closeFromEditTask={closeFromEditTask} />}
+                {displayFormEditArray && <FormEditArray closeFromEditArray={closeFromEditArray} array={arrayToEdit} updateArray={updateArray} />}
             </div>
             <div className="d-flex" style={{overflowX: 'scroll'}}>
                 {arrays.map((array, index)=>{
-                    return <Array key={index} data={array} deleteTask={deleteTask} moveTask={moveTask} displayFormUpdateTask={displayFormUpdateTask} />
+                    return <Array 
+                                key={index} 
+                                data={array} 
+                                deleteTask={deleteTask} 
+                                moveTask={moveTask} 
+                                displayFormUpdateTask={displayFormUpdateTask}
+                                displayFormArray={displayFormArray}
+                                />
                 })}
             </div>
         </div>

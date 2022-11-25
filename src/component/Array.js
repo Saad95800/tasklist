@@ -1,7 +1,7 @@
 import React from 'react'
 import Task from './Task'
 
-export default function Array({data, deleteTask, moveTask, displayFormUpdateTask}){
+export default function Array({data, deleteTask, moveTask, displayFormUpdateTask, displayFormArray}){
 
     return (
         <div className="p-2 m-3 rounded" style={{minWidth: '250px', backgroundColor: '#f3f3f3', minHeight: '100px', border: '#f3f3f3'}}
@@ -15,7 +15,9 @@ export default function Array({data, deleteTask, moveTask, displayFormUpdateTask
             e.preventDefault()
         }}
         >
-            <p>{data.title}</p>
+            <p onClick={()=>{
+                displayFormArray(data.id, data.title)
+            }}>{data.title}</p>
             {data.tasks.map((task, index)=>{
                 return <Task key={index} task={task} id_array={data.id} deleteTask={deleteTask} displayFormUpdateTask={displayFormUpdateTask} />
             })}

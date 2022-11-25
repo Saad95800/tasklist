@@ -1,14 +1,19 @@
 import React, {useState} from 'react'
 
-export default function FormEditTask({task, updateTask}) {
+export default function FormEditTask({task, updateTask,closeFromEditTask}) {
 
     const [titleTask, setTitletask] = useState(task.intitule)
 
   return (
-    <div className="container-form">
+    <div className="container-form" onClick={()=>{
+        closeFromEditTask()
+    }}>
         <form className="forms d-flex flex-column" onSubmit={(e)=>{
             e.preventDefault() // Pour ne pas que la page s'actualise
             updateTask(task.id, titleTask) // On éxécute la fontion de modification de tâche
+        }}
+        onClick={(e)=>{
+            e.stopPropagation()
         }}>
             <div className="form-group">
                 <label>Modifier une tâche</label>
