@@ -1,16 +1,22 @@
 import React, {useState} from 'react'
-import Array from './Array'
-import FormAdd from './FormAdd'
-import FormSup from './FormSup'
+import Array from '../component/Array'
+import FormAdd from '../component/FormAdd'
+import FormSup from '../component/FormSup'
 import { v4 as uuidv4 } from 'uuid';
-import FormAddTask from './FormAddTask'
+import FormAddTask from '../component/FormAddTask'
 import {Link} from 'react-router-dom'
-import FormEditTask from './FormEditTask';
-import FormEditArray from './FormEditArray'
+import FormEditTask from '../component/FormEditTask';
+import FormEditArray from '../component/FormEditArray'
 
+// On créer un composant par élément visuel
 export default function Container(){
 
-    const [arrays, setArrays] = useState([
+
+    // étape 1 (Ajout de tableau) - On défénit un state qui va définir les élément dynamiques de la page
+    const [arrays, setArrays] = useState([ // Définit l'état ititial de l'application, c a d les données qui vont permettre d'avoir notre visuel de part
+        // On stock les tableaux dans un state parce qu'ils s'affichent dynamiquement
+        // c a d qu'on peut les supprimer, en ajouter ou les modifier (potentiellement)    
+        // on ne modifie jamais le html directement (appendChild, querySelector, mais on  modifie à chaque fois ce tableau de states)
         {
             id: 1,
             title: 'Projet ressource',
@@ -62,7 +68,8 @@ export default function Container(){
     ])
 
     const [displayFormAddArray, setDisplayFormAddArray] = useState(false)
-    const [displayFormDeleteArray, setDisplayFormDeleteArray] = useState(false)
+    // étape 1 (Supression de tableau) - Créer un state qui indiquera si le formulaire de suppression va s'afficher ou pas
+    const [displayFormDeleteArray, setDisplayFormDeleteArray] = useState(false) // Au départ il ne s'affiche pas
     const [displayFormAddTask, setDisplayFormAddTask] = useState(false)
     const [displayFormEditTask, setDisplayFormEditTask] = useState(false)
     const [displayFormEditArray, setDisplayFormEditArray] = useState(false)
@@ -105,25 +112,36 @@ export default function Container(){
         setTaskToEdit(getTaskById(id_task))
     }
 
-    const addTable = (title) => {
+    const addTable = (title) => { // Cette fonction va ajouter un nouvel objet (qui représente un tableau dans le state arrays (étape 5))
+        // Pour modifier un tableau state, on va d'abord créer une copie de ce tableau dans une variable newArrays
         let newArrays = [...arrays]
-        newArrays.push({
+        newArrays.push({ // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
             id: arrays.length + 1,
             title: title,
             tasks: []
-        })
-        setArrays(newArrays)
+        }) // On récrée un objet identiques aux objets tableaux déjà présents
+        setArrays(newArrays) // On écrase l'ancien state en mettrant à la place le nouveau tableay d'arrays crée qui contient le nouveau tableu ajouté
     }   
 
+    // étape 2 (Supression de tableau) - Créer un composant qui va contenir un formualire de suppression de tableau
+    // étape 4 (Supression de tableau) - On crée la fonction de suppression de tableau
     const deleteTable = (id) => {
+        // Pour supprimer un élément d'un state tableau, on crée d'abord un tableau vide
         let newArrays = []
         
+        // On parcours le state en cours (liste de tableaux)
         for(let arr of arrays){
-            if(arr.id !== Number(id)){
+            if(arr.id !== Number(id)){ // Si le tableau dans l'itération n'est pas celui qu'on veux supprimer, 
+                                       // on le met dans le tableau newArray
                 newArrays.push(arr)
             }
+            // Si on est dans l'itération du tableau qu'on veux supprimer (arr.id === Number(id)), 
+            // on ne rentrera pas dans le if, donc on ajoutera pas ce tableau dans notre nouveau tableau newArray
         }
-        setArrays(newArrays)
+        // NewArrays sera donc une copie de arrays mais sans le tableau qu'on souhaite supprimer
+        setArrays(newArrays) // On écrase le state précédent avec le nouveau tableau qui ne contient pas le tableau qu'on veux supprimer
+        // Lorsque le tableau est supprimé du state, il diparaitra automatiquement du html
+        // On a conditionné l'afficha HTML à la valeur du state arrays
     }
 
     const addTask = (task, idArray) => {
@@ -220,6 +238,10 @@ export default function Container(){
 
     }
 
+    // étape 2 (Ajout de tableau) - On créer le HTML du composant (container) (D'abors les visuels Statiques)
+    // étape 3 (Ajout de tableau) - On créer le HTML des visuels dynamiques
+    // étape 4 (Ajout de tableau) - Créer un composant contenant un formulaire d'ajout de tableau
+    // étape 5 (Ajout de tableau) - Une fois le composant du formulaire d'ajout de tableau crée, on crée la fonction qui va ajouter un tableau dans le state arrays
     return (
         <div className="container">
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
@@ -239,13 +261,14 @@ export default function Container(){
             }} >Ajouter une tâche</div>
             
                 {displayFormAddArray && <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />}
+                {/* étape 3 (Supression de tableau) - On affiche le formulaire de suppression de tableau en conditionnant son affichage à la valeur du state displayFormDeleteArray */}
                 {displayFormDeleteArray && <FormSup arrays={arrays} deleteTable={deleteTable} closeFormDeleteArray={closeFormDeleteArray} />}
                 {displayFormAddTask && <FormAddTask arrays={arrays} addTask={addTask} closeFormAddTask={closeFormAddTask}/>}
                 {displayFormEditTask && <FormEditTask task={taskToEdit} updateTask={updateTask} closeFromEditTask={closeFromEditTask} />}
                 {displayFormEditArray && <FormEditArray closeFromEditArray={closeFromEditArray} array={arrayToEdit} updateArray={updateArray} />}
             </div>
             <div className="d-flex" style={{overflowX: 'scroll'}}>
-                {arrays.map((array, index)=>{
+                {arrays.map((array, index)=>{ // Comme on est censé avoir plusieurs tableaux, on utilise une boucle pour afficher un composant Array par tableau dans le state
                     return <Array 
                                 key={index} 
                                 data={array} 

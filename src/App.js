@@ -2,10 +2,10 @@
 import React, {useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import Container from './component/Container'
+import Container from './page/Container'
 import {Routes, Route} from 'react-router-dom'
-import HomePage from './component/HomePage';
-import Login from './component/Login';
+import HomePage from './page/HomePage';
+import Login from './page/Login';
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <div>Header</div>
       <Routes>
         <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />

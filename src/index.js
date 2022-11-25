@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render( // Permet de mettre à jour le dom avec nos composants react, affiche le composant App dans la div d'id root
   <React.StrictMode>
     <BrowserRouter>
       <App />
