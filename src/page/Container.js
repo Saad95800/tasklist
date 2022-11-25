@@ -19,6 +19,7 @@ export default function Container(){
         // on ne modifie jamais le html directement (appendChild, querySelector, mais on  modifie à chaque fois ce tableau de states)
         {
             id: 1,
+            order: 4,
             title: 'Projet ressource',
             tasks: [
                 {
@@ -37,6 +38,7 @@ export default function Container(){
         },
         {
             id: 2,
+            order: 3,
             title: 'Sujet de la prochaine réunion',
             tasks: [
                 {
@@ -51,6 +53,7 @@ export default function Container(){
         },
         {
             id: 3,
+            order: 2,
             title: 'A faire',
             tasks: [
                 {
@@ -61,6 +64,7 @@ export default function Container(){
         },
         {
             id: 4,
+            order: 1,
             title: 'En cours',
             tasks: [
             ]
@@ -238,6 +242,32 @@ export default function Container(){
 
     }
 
+    const moveArray = (id_array_drag, order_array_drag, id_array_drop, order_array_drop) => {
+
+        let newArrays = [...arrays]
+
+        for(let array of newArrays){
+            
+            // le tableau qui a l'id id_array_drag prend le order order_array_drop
+            // Les tableaux d'order inférieur à order_array_drop et supérieur à order_array_drag on leur order qui fait -1
+            if(array.id.toString() === id_array_drag.toString()){
+                array.order = Number(order_array_drop)
+            }else if(array.id.toString() === id_array_drop.toString()){
+                array.order = array.order - 1
+            }else if(Number(array.order) < Number(order_array_drop) && Number(array.order) > Number(order_array_drag)){
+                array.order = array.order - 1
+            }
+            
+
+        }
+        setArrays(newArrays)
+    }
+
+
+    let arraySorted = arrays.sort((a, b) => (a.order > b.order ? 1 : -1))
+
+    
+
     // étape 2 (Ajout de tableau) - On créer le HTML du composant (container) (D'abors les visuels Statiques)
     // étape 3 (Ajout de tableau) - On créer le HTML des visuels dynamiques
     // étape 4 (Ajout de tableau) - Créer un composant contenant un formulaire d'ajout de tableau
@@ -268,7 +298,7 @@ export default function Container(){
                 {displayFormEditArray && <FormEditArray closeFromEditArray={closeFromEditArray} array={arrayToEdit} updateArray={updateArray} />}
             </div>
             <div className="d-flex" style={{overflowX: 'scroll'}}>
-                {arrays.map((array, index)=>{ // Comme on est censé avoir plusieurs tableaux, on utilise une boucle pour afficher un composant Array par tableau dans le state
+                {arraySorted.map((array, index)=>{ // Comme on est censé avoir plusieurs tableaux, on utilise une boucle pour afficher un composant Array par tableau dans le state
                     return <Array 
                                 key={index} 
                                 data={array} 
@@ -276,6 +306,7 @@ export default function Container(){
                                 moveTask={moveTask} 
                                 displayFormUpdateTask={displayFormUpdateTask}
                                 displayFormArray={displayFormArray}
+                                moveArray={moveArray}
                                 />
                 })}
             </div>

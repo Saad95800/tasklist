@@ -26,7 +26,6 @@ function App() {
 
   return (
     <div className="App">
-      <div>Header</div>
       <Routes>
         <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />
