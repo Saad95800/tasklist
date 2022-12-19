@@ -6,33 +6,32 @@ export default function FormAddTask({arrays, addTask, closeFormAddTask}){
     const [idArray, setIdArray] = useState(1)
 
     return (
-        <div>
-            <form action="" onSubmit={(e)=>{
+        <div className="container-form">
+            <form className="forms" action="" onSubmit={(e)=>{
                 e.preventDefault()
                 addTask(task, idArray)
             }}>
-            <div>
+                <div className="form-group">
                     <label>task</label>
-                    <select value={idArray} onChange={(e) => {
+                    <select className="form-control" value={idArray} onChange={(e) => {
                             setIdArray(e.target.value)
-                    }}>
+                    }}> 
                         {arrays.map((array, index) => {
                             return <option key={index} value={array.id}>{array.title}</option>
                         })}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Tâche</label>
-                    <input value={task} onChange={(e) => {
+                    <input className="form-control" value={task} onChange={(e) => {
                         setTask(e.target.value)
                     }} type="text" />
                 </div>
-                <input type="submit" value="Ajouter une tâche" /> 
+                <input type="submit" className="btn btn-primary mt-2" value="Ajouter une tâche" /> 
             </form>
             <button type="button" className="btn-close" aria-label="Close" onClick={()=>{
                 closeFormAddTask()
-            }}></button> 
-            
+            }}></button>
         </div>
     )
 

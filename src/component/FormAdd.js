@@ -7,8 +7,8 @@ export default function FormAdd({addTable, closeFormAddArray}){
     const [title, setTile] = useState('') // étape 2 - On crée un state par champs de formulaire
 
     return(
-        <div className="container-form-add-array">
-            <form onSubmit={(e)=>{ {/* étape 5 - Créer la fonction de validation de formulaire */}
+        <div className="container-form">
+            <form className="forms" onSubmit={(e)=>{ {/* étape 5 - Créer la fonction de validation de formulaire */}
                 e.preventDefault()
                 if(title.length > 0){
                     {/* Dans cette fonction pour récupérer =le titre saisi par l'utilisateur, j'utilise le state title */}

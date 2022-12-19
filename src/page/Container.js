@@ -122,7 +122,8 @@ export default function Container(){
         newArrays.push({ // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
             id: arrays.length + 1,
             title: title,
-            tasks: []
+            tasks: [],
+            order: arrays.length + 1
         }) // On récrée un objet identiques aux objets tableaux déjà présents
         setArrays(newArrays) // On écrase l'ancien state en mettrant à la place le nouveau tableay d'arrays crée qui contient le nouveau tableu ajouté
     }   
@@ -312,7 +313,7 @@ export default function Container(){
                 {displayFormEditTask && <FormEditTask task={taskToEdit} updateTask={updateTask} closeFromEditTask={closeFromEditTask} />}
                 {displayFormEditArray && <FormEditArray closeFromEditArray={closeFromEditArray} array={arrayToEdit} updateArray={updateArray} />}
             </div>
-            <div className="d-flex" style={{overflowX: 'scroll'}}>
+            <div className="d-flex" style={{overflowX: 'scroll', minHeight: '500px'}}>
                 {arraySorted.map((array, index)=>{ // Comme on est censé avoir plusieurs tableaux, on utilise une boucle pour afficher un composant Array par tableau dans le state
                     return <Array 
                                 key={index} 
