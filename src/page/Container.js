@@ -7,6 +7,7 @@ import FormAddTask from '../component/FormAddTask'
 import {Link} from 'react-router-dom'
 import FormEditTask from '../component/FormEditTask';
 import FormEditArray from '../component/FormEditArray'
+import {produce} from 'immer'
 
 // On créer un composant par élément visuel
 export default function Container(){
@@ -151,28 +152,20 @@ export default function Container(){
 
     const addTask = (task, idArray) => {
 
-        let newArray = []
+        let newArray = produce(arrays, arrayDraft => {
+            for(let array of arrayDraft){
 
-        for(let array of arrays){
+                if(Number(array.id) === Number(idArray)){
+                    array.tasks.push({
+                        id: uuidv4(),
+                        intitule: task 
+                    })
+                }
 
-            if(Number(array.id) === Number(idArray)){
-                newArray.push({
-                    ...array,
-                    tasks: [
-                        ...array.tasks,
-                        {
-                            id: uuidv4(),
-                            intitule: task
-                        }
-                    ]
-                })
-            }else{
-                newArray.push(array)
-            }
+            }       
+        })
 
-        }
-
-        setArrays(newArray)
+        setArrays([...newArray])
 
     }
 
