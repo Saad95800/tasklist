@@ -172,19 +172,20 @@ export default function Container(){
 
     const deleteTask = (id_task) => {
         
-        let newArray = [...arrays]
-
-        for(let array of newArray){
-            let newTasks = []
-            for(let task of array.tasks){
-                if(task.id.toString() !== id_task.toString()){
-                    newTasks.push(task)
-                }
+        let newArray = produce(arrays, arraysDraft => {
+            for(let array of arraysDraft){
+                produce(array.tasks, tasksDraft => {
+                    tasksDraft.map((task, index)=>{
+                        if(task.id.toString() === id_task.toString()){
+                            tasksDraft.splice(index, 1)
+                        }
+                    })
+                })
             }
-            array.tasks = newTasks
-        }
+        })
 
-        setArrays(newArray)
+        setArrays([...newArray])
+
     }
 
     const closeFormAddArray = () =>{
