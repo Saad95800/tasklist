@@ -7,20 +7,17 @@ import FormAddTask from '../component/FormAddTask'
 import {Link} from 'react-router-dom'
 import FormEditTask from '../component/FormEditTask';
 import FormEditArray from '../component/FormEditArray'
-// import {displayMessage} from '../redux/message/MessageSlice'
 import { useSelector } from 'react-redux'
 import { store } from '../redux/store';
 import Message from '../component/Message';
+import { displayMessage } from '../redux/message/MessageSlice';
 
 // On créer un composant par élément visuel
 export default function Container(){
 
-
-    // const texte = useSelector((state) => state.message.texte)
-
-    const [viewMessage, setViewMessage] = useState(false)
-    const [texte, setTexte] = useState('')
-    const [typeMessage, setTypeMessage] = useState('')
+    const texte = useSelector((state) => state.message.texte)
+    const viewMessage = useSelector((state) => state.message.viewMessage)
+    const typeMessage = useSelector((state) => state.message.typeMessage)
 
     // étape 1 (Ajout de tableau) - On défénit un state qui va définir les élément dynamiques de la page
     const [arrays, setArrays] = useState([ // Définit l'état ititial de l'application, c a d les données qui vont permettre d'avoir notre visuel de part
@@ -81,18 +78,6 @@ export default function Container(){
         }
     ])
 
-    const displayMessage = (texte, typeMessage) => {
-        setViewMessage(true)
-        setTexte(texte)
-        setTypeMessage(typeMessage)
-    }
-
-    const hideMessage = () => {
-        setViewMessage(false)
-        setTexte('')
-        setTypeMessage('')
-    }
-
     const [displayFormAddArray, setDisplayFormAddArray] = useState(false)
     // étape 1 (Supression de tableau) - Créer un state qui indiquera si le formulaire de suppression va s'afficher ou pas
     const [displayFormDeleteArray, setDisplayFormDeleteArray] = useState(false) // Au départ il ne s'affiche pas
@@ -148,7 +133,7 @@ export default function Container(){
             order: arrays.length + 1
         }) // On récrée un objet identiques aux objets tableaux déjà présents
         setArrays(newArrays) // On écrase l'ancien state en mettrant à la place le nouveau tableay d'arrays crée qui contient le nouveau tableu ajouté
-        displayMessage('Tableau ajouté avec succès !', 'success')
+        store.dispatch(displayMessage({texte:'Tableau ajouté avec succès !', typeMessage: 'success'}))
         setDisplayFormAddArray(false)
     }   
 
@@ -314,7 +299,7 @@ export default function Container(){
     // étape 5 (Ajout de tableau) - Une fois le composant du formulaire d'ajout de tableau crée, on crée la fonction qui va ajouter un tableau dans le state arrays
     return (
         <div className="container">
-            {viewMessage && <Message texte={texte} typeMessage={typeMessage} hideMessage={hideMessage}/>}
+            {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
             <Link to="/login" className="btn btn-primary">Login</Link>
             <div className="d-flex">
@@ -331,7 +316,7 @@ export default function Container(){
                 setDisplayFormAddTask(true)
             }} >Ajouter une tâche</div>
             
-                {displayFormAddArray && <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} displayMessage={displayMessage} />}
+                {displayFormAddArray && <FormAdd addTable={addTable} closeFormAddArray={closeFormAddArray} />}
                 {/* étape 3 (Supression de tableau) - On affiche le formulaire de suppression de tableau en conditionnant son affichage à la valeur du state displayFormDeleteArray */}
                 {displayFormDeleteArray && <FormSup arrays={arrays} deleteTable={deleteTable} closeFormDeleteArray={closeFormDeleteArray} />}
                 {displayFormAddTask && <FormAddTask arrays={arrays} addTask={addTask} closeFormAddTask={closeFormAddTask}/>}

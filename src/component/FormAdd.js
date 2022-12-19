@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { displayMessage } from '../redux/message/MessageSlice'
+import { store } from '../redux/store'
 
-export default function FormAdd({addTable, closeFormAddArray, displayMessage}){
+export default function FormAdd({addTable, closeFormAddArray}){
 // étape 1 - Créer le HTML statique du composant FormAdd
 // Composant n'a pas d'éléments dynamiques
 
@@ -15,7 +17,7 @@ export default function FormAdd({addTable, closeFormAddArray, displayMessage}){
                     {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra d'ajouter un tableau dans le state arrays */}
                     addTable(title)
                 }else{
-                    displayMessage('Veuillez saisir un titre de tableau', 'error')
+                    store.dispatch(displayMessage({texte: 'Veuillez saisir un titre de tableau', typeMessage:'error'}))
                 }
             }}>
                 <div className="form-group">
