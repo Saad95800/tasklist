@@ -7,7 +7,6 @@ import FormAddTask from '../component/FormAddTask'
 import {Link} from 'react-router-dom'
 import FormEditTask from '../component/FormEditTask';
 import FormEditArray from '../component/FormEditArray'
-import {produce} from 'immer'
 
 // On créer un composant par élément visuel
 export default function Container(){
@@ -96,18 +95,17 @@ export default function Container(){
 
     const updateTask = (id_task, intitule) => {
         // On modifie dans le state la tâche
+        let newArrays = [...arrays]
 
-        let newArrays = produce(arrays, arraysDraft => {
-            for(let array of arraysDraft){
-                for(let task of array.tasks){
-                    if(task.id.toString() === id_task.toString()){
-                        task.intitule = intitule
-                    }
+        for(let array of newArrays){
+            for(let task of array.tasks){
+                if(task.id.toString() === id_task.toString()){
+                    task.intitule = intitule
                 }
-            }            
-        })
+            }
+        }
 
-        setArrays([...newArrays])
+        setArrays(newArrays)
         setDisplayFormEditTask(false)
 
     }
@@ -153,39 +151,46 @@ export default function Container(){
 
     const addTask = (task, idArray) => {
 
-        let newArray = produce(arrays, arrayDraft => {
-            for(let array of arrayDraft){
+        let newArray = []
 
-                if(Number(array.id) === Number(idArray)){
-                    array.tasks.push({
-                        id: uuidv4(),
-                        intitule: task 
-                    })
-                }
+        for(let array of arrays){
 
-            }       
-        })
+            if(Number(array.id) === Number(idArray)){
+                newArray.push({
+                    ...array,
+                    tasks: [
+                        ...array.tasks,
+                        {
+                            id: uuidv4(),
+                            intitule: task
+                        }
+                    ]
+                })
+            }else{
+                newArray.push(array)
+            }
 
-        setArrays([...newArray])
+        }
+
+        setArrays(newArray)
 
     }
 
     const deleteTask = (id_task) => {
         
-        let newArray = produce(arrays, arraysDraft => {
-            for(let array of arraysDraft){
-                produce(array.tasks, tasksDraft => {
-                    tasksDraft.map((task, index)=>{
-                        if(task.id.toString() === id_task.toString()){
-                            tasksDraft.splice(index, 1)
-                        }
-                    })
-                })
+        let newArray = [...arrays]
+
+        for(let array of newArray){
+            let newTasks = []
+            for(let task of array.tasks){
+                if(task.id.toString() !== id_task.toString()){
+                    newTasks.push(task)
+                }
             }
-        })
+            array.tasks = newTasks
+        }
 
-        setArrays([...newArray])
-
+        setArrays(newArray)
     }
 
     const closeFormAddArray = () =>{
