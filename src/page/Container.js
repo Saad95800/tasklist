@@ -96,17 +96,18 @@ export default function Container(){
 
     const updateTask = (id_task, intitule) => {
         // On modifie dans le state la tâche
-        let newArrays = [...arrays]
 
-        for(let array of newArrays){
-            for(let task of array.tasks){
-                if(task.id.toString() === id_task.toString()){
-                    task.intitule = intitule
+        let newArrays = produce(arrays, arraysDraft => {
+            for(let array of arraysDraft){
+                for(let task of array.tasks){
+                    if(task.id.toString() === id_task.toString()){
+                        task.intitule = intitule
+                    }
                 }
-            }
-        }
+            }            
+        })
 
-        setArrays(newArrays)
+        setArrays([...newArrays])
         setDisplayFormEditTask(false)
 
     }
