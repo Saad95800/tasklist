@@ -120,6 +120,7 @@ export const ArraySlice = createSlice({
             state.arrays = newArrays // On écrase le state précédent avec le nouveau tableau qui ne contient pas le tableau qu'on veux supprimer
             // Lorsque le tableau est supprimé du state, il diparaitra automatiquement du html
             // On a conditionné l'afficha HTML à la valeur du state arrays
+            state.displayFormDeleteArray = false
         },
         moveArray: (state, action) => {
 

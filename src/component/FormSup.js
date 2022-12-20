@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { deleteTable } from '../redux/array/ArraySlice'
+import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 
 export default function FormSup({arrays, closeFormDeleteArray}){
@@ -16,6 +17,7 @@ export default function FormSup({arrays, closeFormDeleteArray}){
                 {/* Dans cette fonction pour récupérer le titre l'id du tableau saisi par l'utilisateur, j'utilise le state idArray */}
                 {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra de supprimer un tableau dans le state arrays */}
                 store.dispatch(deleteTable(idArray))
+                store.dispatch(displayMessage({texte:'Tableau supprimé avec succès !', typeMessage: 'success'}))
             }}>
                 <div className="form-group">
                     <label>Supprimer un tableau</label>

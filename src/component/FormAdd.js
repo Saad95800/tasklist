@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { setDisplayFormAddArray } from '../redux/array/ArraySlice'
 import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 
@@ -20,6 +21,7 @@ export default function FormAdd({addTable, closeFormAddArray}){
                 }else{
                     store.dispatch(displayMessage({texte: 'Veuillez saisir un titre de tableau', typeMessage:'error'}))
                 }
+                store.dispatch(setDisplayFormAddArray(false))
             }}>
                 <div className="form-group">
                     <label>Ajouter un tableau</label>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { updateArray } from '../redux/array/ArraySlice'
+import { updateArray, setDisplayFormEditArray } from '../redux/array/ArraySlice'
+import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 
 export default function FormEditArray({array, closeFromEditArray}) {
@@ -12,10 +13,17 @@ export default function FormEditArray({array, closeFromEditArray}) {
     }}>
         <form className="forms d-flex flex-column" onSubmit={(e)=>{
             e.preventDefault()
+            if(titleArray.length === 0){
+                store.dispatch(displayMessage({texte:'Veuillez saisir un titre de tableau', typeMessage: 'error'}))
+                store.dispatch(setDisplayFormEditArray(false))
+                return
+            }
             store.dispatch(updateArray({
                 id_array: array.id, 
                 title_array: titleArray
             }))
+            store.dispatch(displayMessage({texte:'Tableau modifié avec succès !', typeMessage: 'success'}))
+            store.dispatch(setDisplayFormEditArray(false))
         }}
         onClick={(e)=>{
             e.stopPropagation()

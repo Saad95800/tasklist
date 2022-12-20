@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { updateTask } from '../redux/array/ArraySlice'
+import { setDisplayFormEditTask, updateTask } from '../redux/array/ArraySlice'
+import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 
 export default function FormEditTask({task,closeFromEditTask}) {
@@ -12,10 +13,23 @@ export default function FormEditTask({task,closeFromEditTask}) {
     }}>
         <form className="forms d-flex flex-column" onSubmit={(e)=>{
             e.preventDefault() // Pour ne pas que la page s'actualise
+
+
+            if(titleTask.length === 0){
+                store.dispatch(displayMessage({texte:'Veuillez saisir un titre de tâche', typeMessage: 'error'}))
+                store.dispatch(setDisplayFormEditTask(false))
+                return
+            }
             store.dispatch(updateTask({
                 id_task: task.id, 
                 intitule: titleTask
             })) // On éxécute la fontion de modification de tâche
+            store.dispatch(displayMessage({texte:'Tâche modifié avec succès !', typeMessage: 'success'}))
+            store.dispatch(setDisplayFormEditTask(false))
+
+
+
+
         }}
         onClick={(e)=>{
             e.stopPropagation()

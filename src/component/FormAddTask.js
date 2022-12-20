@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { addTask } from '../redux/array/ArraySlice'
+import { addTask, setDisplayFormAddTask } from '../redux/array/ArraySlice'
+import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 
 export default function FormAddTask({arrays, closeFormAddTask}){
@@ -11,10 +12,17 @@ export default function FormAddTask({arrays, closeFormAddTask}){
         <div className="container-form">
             <form className="forms" action="" onSubmit={(e)=>{
                 e.preventDefault()
+                if(task === ''){
+                    store.dispatch(displayMessage({texte:'Veuillez saisir une tâche', typeMessage: 'error'}))
+                    store.dispatch(setDisplayFormAddTask(false))
+                    return
+                }
                 store.dispatch(addTask({
                     title: task, 
                     id_array: idArray
                 }))
+                store.dispatch(displayMessage({texte:'Tâche ajoutée avec succès', typeMessage: 'success'}))
+                store.dispatch(setDisplayFormAddTask(false))
             }}>
                 <div className="form-group">
                     <label>task</label>
