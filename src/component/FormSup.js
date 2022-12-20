@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { deleteTable } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 
-export default function FormSup({arrays, deleteTable, closeFormDeleteArray}){
+export default function FormSup({arrays, closeFormDeleteArray}){
 // étape 1 - Créer le HTML statique du composant FormAdd
 // Composant n'a pas d'éléments dynamiques
 
@@ -13,7 +15,7 @@ export default function FormSup({arrays, deleteTable, closeFormDeleteArray}){
                 e.preventDefault()
                 {/* Dans cette fonction pour récupérer le titre l'id du tableau saisi par l'utilisateur, j'utilise le state idArray */}
                 {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra de supprimer un tableau dans le state arrays */}
-                deleteTable(idArray)
+                store.dispatch(deleteTable(idArray))
             }}>
                 <div className="form-group">
                     <label>Supprimer un tableau</label>

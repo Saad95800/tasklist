@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { updateArray } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 
-export default function FormEditArray({array, closeFromEditArray, updateArray}) {
+export default function FormEditArray({array, closeFromEditArray}) {
 
     const [titleArray, setTitleArray] = useState(array.title)
 
@@ -10,7 +12,10 @@ export default function FormEditArray({array, closeFromEditArray, updateArray}) 
     }}>
         <form className="forms d-flex flex-column" onSubmit={(e)=>{
             e.preventDefault()
-            updateArray(array.id, titleArray)
+            store.dispatch(updateArray({
+                id_array: array.id, 
+                title_array: titleArray
+            }))
         }}
         onClick={(e)=>{
             e.stopPropagation()

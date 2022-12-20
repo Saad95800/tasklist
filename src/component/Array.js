@@ -1,8 +1,10 @@
 import React from 'react'
+import { moveArray } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 import Task from './Task'
 
 // Le composant Array n'a pas d'états à modifier
-export default function Array({data, deleteTask, moveTask, displayFormUpdateTask, displayFormArray, moveArray}){
+export default function Array({data, deleteTask, moveTask, displayFormUpdateTask, displayFormArray}){
 // étape 1 - Créer le HTML statique du composant Array
 // étape 2 - Je créer un (ou des) composant(s) pour les élément dynamiques
     return (
@@ -26,7 +28,13 @@ export default function Array({data, deleteTask, moveTask, displayFormUpdateTask
             if(e.dataTransfer.getData('id_array_drag') !== undefined && e.dataTransfer.getData('id_array_drag') !== null && e.dataTransfer.getData('id_array_drag') !== ''){
                 let id_array_drag = e.dataTransfer.getData('id_array_drag')
                 let order_array_drag = e.dataTransfer.getData('order_array_drag')
-                moveArray(id_array_drag, order_array_drag, id_array_drop, data.order)
+                console.log('here')
+                store.dispatch(moveArray({
+                    id_array_drag: id_array_drag, 
+                    order_array_drag: order_array_drag, 
+                    id_array_drop: id_array_drop, 
+                    order: data.order
+                }))
             }
         }}
         onDragOver={(e)=>{

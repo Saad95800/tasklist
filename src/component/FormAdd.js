@@ -16,6 +16,7 @@ export default function FormAdd({addTable, closeFormAddArray}){
                     {/* Dans cette fonction pour récupérer =le titre saisi par l'utilisateur, j'utilise le state title */}
                     {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra d'ajouter un tableau dans le state arrays */}
                     addTable(title)
+                    store.dispatch(displayMessage({texte:'Tableau ajouté avec succès !', typeMessage: 'success'}))
                 }else{
                     store.dispatch(displayMessage({texte: 'Veuillez saisir un titre de tableau', typeMessage:'error'}))
                 }
