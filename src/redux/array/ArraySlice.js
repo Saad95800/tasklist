@@ -24,7 +24,8 @@ const initialState = {
                     id: 3,
                     intitule: 'Faire le footer'
                 }
-            ]
+            ],
+            spaceId: 1
         },
         {
             id: 2,
@@ -39,7 +40,8 @@ const initialState = {
                     id: 5,
                     intitule: 'Créer la base de donnée'
                 }
-            ]
+            ],
+            spaceId: 1
         },
         {
             id: 3,
@@ -50,14 +52,16 @@ const initialState = {
                     id: 16,
                     intitule: 'Faire la pagination de la page d\'accueil'
                 }
-            ]
+            ],
+            spaceId: 1
         },
         {
             id: 4,
             order: 1,
             title: 'En cours',
             tasks: [
-            ]
+            ],
+            spaceId: 2
         }
     ],
     displayFormAddArray: false,

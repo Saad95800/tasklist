@@ -6,6 +6,7 @@ import Container from './page/Container'
 import {Routes, Route} from 'react-router-dom'
 import HomePage from './page/HomePage';
 import Login from './page/Login';
+import SpaceList from './page/SpaceList'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/tasklist`} element={ checkPassword() ? <Container /> : <Login setData={setData} data={{email: email, password: password}} />} />
+        <Route path={`/spaces`} element={ checkPassword() ? <SpaceList /> : <Login setData={setData} data={{email: email, password: password}} />} />
       </Routes>
       
     </div>
