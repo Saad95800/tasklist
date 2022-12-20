@@ -1,7 +1,9 @@
 
 import React from 'react'
+import { deleteTask } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 
-export default function Task({task, deleteTask, displayFormUpdateTask}){
+export default function Task({task, displayFormUpdateTask}){
 // étape 1 - Créer le HTML statique du composant Task
 // Composant n'a pas d'éléments dynamiques
     return (
@@ -16,7 +18,7 @@ export default function Task({task, deleteTask, displayFormUpdateTask}){
         }}>
             <button type="button" className="btn-close" aria-label="Close" onClick={(e)=>{
                 e.stopPropagation()
-                deleteTask(task.id)
+                store.dispatch(deleteTask(task.id))
             }}></button>
             <p>{task.intitule}</p>
         </div>

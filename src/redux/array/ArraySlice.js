@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { addTaskFunc, deleteTaskFunc, getTaskById, updatetaskFunc } from '../../utils/functions'
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -165,6 +166,22 @@ export const ArraySlice = createSlice({
     
             state.arrays = newArrays
             state.DisplayFormEditArray = false
+        },
+        updateTask: (state, action) => {
+            // On modifie dans le state la tâche
+            state.arrays = updatetaskFunc(action.payload.id_task, action.payload.intitule, state.arrays)
+            state.displayFormEditTask = false
+        },
+        moveTask: (state, action) => {
+            let taskToMove = getTaskById(action.payload.id_task, state.arrays)
+            state.arrays = deleteTaskFunc(action.payload.id_task, state.arrays)
+            state.arrays = addTaskFunc(taskToMove.intitule, action.payload.id_array_drop, state.arrays)
+        },
+        addTask: (state, action) => {
+            state.arrays = addTaskFunc(action.payload.title, action.payload.id_array, state.arrays)
+        },
+        deleteTask: (state, action) => {
+            state.arrays = deleteTaskFunc(action.payload, state.arrays)
         }
     }
 })
@@ -179,6 +196,10 @@ export const {
     setDisplayFormEditArray,
     deleteTable,
     moveArray,
-    updateArray} = ArraySlice.actions
+    updateArray,
+    updateTask,
+    addTask,
+    deleteTask,
+    moveTask} = ArraySlice.actions
 
 export default ArraySlice.reducer

@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { addTask } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 
-export default function FormAddTask({arrays, addTask, closeFormAddTask}){
+export default function FormAddTask({arrays, closeFormAddTask}){
 
     const [task, setTask] = useState('')
     const [idArray, setIdArray] = useState(1)
@@ -9,7 +11,10 @@ export default function FormAddTask({arrays, addTask, closeFormAddTask}){
         <div className="container-form">
             <form className="forms" action="" onSubmit={(e)=>{
                 e.preventDefault()
-                addTask(task, idArray)
+                store.dispatch(addTask({
+                    title: task, 
+                    id_array: idArray
+                }))
             }}>
                 <div className="form-group">
                     <label>task</label>

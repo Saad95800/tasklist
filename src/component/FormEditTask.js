@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import { updateTask } from '../redux/array/ArraySlice'
+import { store } from '../redux/store'
 
-export default function FormEditTask({task, updateTask,closeFromEditTask}) {
+export default function FormEditTask({task,closeFromEditTask}) {
 
     const [titleTask, setTitletask] = useState(task.intitule)
 
@@ -10,7 +12,10 @@ export default function FormEditTask({task, updateTask,closeFromEditTask}) {
     }}>
         <form className="forms d-flex flex-column" onSubmit={(e)=>{
             e.preventDefault() // Pour ne pas que la page s'actualise
-            updateTask(task.id, titleTask) // On éxécute la fontion de modification de tâche
+            store.dispatch(updateTask({
+                id_task: task.id, 
+                intitule: titleTask
+            })) // On éxécute la fontion de modification de tâche
         }}
         onClick={(e)=>{
             e.stopPropagation()
