@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid';
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
     spaces: [
         {
             id: 1,
-            title: 'Conduite de projets'
+            title: 'Conduite de projets',
+            color: "#cccccc"
         },
         {
             id: 2,
@@ -18,7 +20,8 @@ const initialState = {
     ],
     viewFormEditSpace: false,
     title: '',
-    spaceToEdit: null
+    spaceToEdit: null,
+    contextSpace: 'edit'
 }
 
 // On crée notre slice
@@ -46,11 +49,25 @@ export const SpaceSlice = createSlice({
     
             state.spaces = newSpaces
             state.viewFormEditSpace = false
+        },
+        addSpace: (state, action) => {
+            let newSpaces = [...state.spaces]
+
+            newSpaces.push({
+                id: uuidv4(),
+                title: action.payload.title_space
+            })
+
+            state.spaces = newSpaces
+            state.viewFormEditSpace = false
+        },
+        setContextSpace: (state, action) => {
+            state.contextSpace = action.payload
         }
     }
 })
 
 
-export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace} = SpaceSlice.actions
+export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace} = SpaceSlice.actions
 
 export default SpaceSlice.reducer
