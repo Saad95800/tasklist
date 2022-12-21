@@ -34,11 +34,23 @@ export const SpaceSlice = createSlice({
         },
         setViewFormEditSpace: (state, action) => {
             state.viewFormEditSpace = action.payload
+        },
+        updateSpace: (state, action) => {
+            let newSpaces = [...state.spaces]
+    
+            for(let space of newSpaces){
+                if(space.id.toString() === action.payload.id_space.toString()){
+                    space.title = action.payload.title_space
+                }
+            }
+    
+            state.spaces = newSpaces
+            state.viewFormEditSpace = false
         }
     }
 })
 
 
-export const {setTitle, setSpaceToEdit, setViewFormEditSpace} = SpaceSlice.actions
+export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace} = SpaceSlice.actions
 
 export default SpaceSlice.reducer
