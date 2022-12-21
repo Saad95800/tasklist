@@ -3,13 +3,13 @@ import Array from '../component/Array'
 import FormAdd from '../component/FormAdd'
 import FormSup from '../component/FormSup'
 import FormAddTask from '../component/FormAddTask'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import FormEditTask from '../component/FormEditTask';
 import FormEditArray from '../component/FormEditArray'
 import { useSelector } from 'react-redux'
 import { store } from '../redux/store';
 import Message from '../component/Message';
-// import { displayMessage } from '../redux/message/MessageSlice';
+
 import { 
     setArrays, 
     setDisplayFormAddArray, 
@@ -23,6 +23,7 @@ import { getTaskById } from '../utils/functions'
 // On créer un composant par élément visuel
 export default function Container(){
 
+    const { id } = useParams()
     const texte = useSelector((state) => state.message.texte)
     const viewMessage = useSelector((state) => state.message.viewMessage)
     const typeMessage = useSelector((state) => state.message.typeMessage)
@@ -36,7 +37,9 @@ export default function Container(){
     
     // étape 1 (Ajout de tableau) - On défénit un state qui va définir les élément dynamiques de la page
 
-
+    const filterArrays = (spaceId, arrays) => {
+        return [...arrays].filter(array => array.spaceId.toString() === spaceId.toString())
+    }
 
     // étape 1 (Supression de tableau) - Créer un state qui indiquera si le formulaire de suppression va s'afficher ou pas
 
@@ -78,7 +81,7 @@ export default function Container(){
         store.dispatch(setDisplayFormEditArray(false))
     }
 
-    let arraySorted = arrays.slice().sort((a, b) => (a.order > b.order ? 1 : -1))
+    let arraySorted = filterArrays(id, arrays).slice().sort((a, b) => (a.order > b.order ? 1 : -1))
 
     // étape 2 (Ajout de tableau) - On créer le HTML du composant (container) (D'abors les visuels Statiques)
     // étape 3 (Ajout de tableau) - On créer le HTML des visuels dynamiques
@@ -89,6 +92,7 @@ export default function Container(){
             {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
             <Link to="/login" className="btn btn-primary">Login</Link>
+            <Link to="/spaces" className="btn btn-primary">Espaces</Link>
             <div className="d-flex">
 
             <div className='btn btn-info m-1' onClick={()=>{

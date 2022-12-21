@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />
-        <Route path={`/tasklist`} element={ checkPassword() ? <Container /> : <Login setData={setData} data={{email: email, password: password}} />} />
+        <Route path={`/tasklist/:id`} element={ checkPassword() ? <Container /> : <Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/spaces`} element={ checkPassword() ? <SpaceList /> : <Login setData={setData} data={{email: email, password: password}} />} />
       </Routes>
       

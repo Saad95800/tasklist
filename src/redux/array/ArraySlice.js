@@ -53,7 +53,7 @@ const initialState = {
                     intitule: 'Faire la pagination de la page d\'accueil'
                 }
             ],
-            spaceId: 1
+            spaceId: 2
         },
         {
             id: 4,

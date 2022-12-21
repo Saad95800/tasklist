@@ -8,7 +8,6 @@ export default function HomePage() {
         <h1>Homepage</h1>
         {/* Le composant Link permet de rediriger vers une autre page sans avoir a actualiser la page (Single page Application) */}
         <Link to="/login" className="btn btn-primary">Login</Link>
-        <Link to="/tasklist" className="btn btn-primary">Liste de tâches</Link>
         <Link to="/spaces" className="btn btn-primary">Liste des espaces de travail</Link>
     </div>
   )

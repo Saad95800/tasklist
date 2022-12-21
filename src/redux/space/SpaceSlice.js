@@ -5,7 +5,8 @@ const initialState = {
     spaces: [
         {
             id: 1,
-            title: 'Conduite de projets'
+            title: 'Conduite de projets',
+            color: '#j'
         },
         {
             id: 2,
