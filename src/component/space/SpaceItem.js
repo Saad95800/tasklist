@@ -4,10 +4,14 @@ import { setSpaceToEdit, setViewFormEditSpace, setContextSpace } from '../../red
 import { store } from '../../redux/store'
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
+import { useSelector } from 'react-redux';
 
 export default function SpaceItem({space}) {
+
+  const color = useSelector(state => state.space.color)
+
   return (
-    <div className="card ms-2 me-2 mt-1" style={{width: '18rem'}}>
+    <div className="card ms-2 me-2 mt-1" style={{width: '18rem', backgroundColor: space.color}}>
        <Box>
         <button  style={{top: '0px', right: '0px'}} className="position-absolute" onClick={()=>{
             store.dispatch(setContextSpace('edit'))

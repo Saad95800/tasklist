@@ -20,6 +20,7 @@ const initialState = {
     ],
     viewFormEditSpace: false,
     title: '',
+    color: '#ffffff',
     spaceToEdit: null,
     contextSpace: 'edit'
 }
@@ -44,6 +45,7 @@ export const SpaceSlice = createSlice({
             for(let space of newSpaces){
                 if(space.id.toString() === action.payload.id_space.toString()){
                     space.title = action.payload.title_space
+                    space.color = action.payload.color
                 }
             }
     
@@ -55,7 +57,8 @@ export const SpaceSlice = createSlice({
 
             newSpaces.push({
                 id: uuidv4(),
-                title: action.payload.title_space
+                title: action.payload.title_space,
+                color: action.payload.color
             })
 
             state.spaces = newSpaces
@@ -63,11 +66,14 @@ export const SpaceSlice = createSlice({
         },
         setContextSpace: (state, action) => {
             state.contextSpace = action.payload
+        },
+        setColor: (state, action) => {
+            state.color = action.payload
         }
     }
 })
 
 
-export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace} = SpaceSlice.actions
+export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
 
 export default SpaceSlice.reducer
