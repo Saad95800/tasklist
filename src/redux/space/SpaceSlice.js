@@ -22,7 +22,8 @@ const initialState = {
     title: '',
     color: '#ffffff',
     spaceToEdit: null,
-    contextSpace: 'edit'
+    contextSpace: 'edit',
+    spacesToDelete: []
 }
 
 // On crée notre slice
@@ -77,10 +78,29 @@ export const SpaceSlice = createSlice({
                 }
             })
         },
+        setSpacesToDelete: (state, action) => {
+            
+
+            if(state.spacesToDelete.indexOf(action.payload) === -1){
+                state.spacesToDelete.push(action.payload)
+            }else{
+                state.spacesToDelete.splice(state.spacesToDelete.indexOf(action.payload), 1)
+            }
+
+        },
+        deleteSpacesSelected: (state, action) => {
+            for(let spaceId of state.spacesToDelete){
+                state.spaces.map((space, index)=>{
+                    if(spaceId === space.id){
+                        state.spaces.splice(index, 1)
+                    }
+                })
+            }
+        },
     }
 })
 
 
-export const {deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
+export const {deleteSpacesSelected, setSpacesToDelete, deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
 
 export default SpaceSlice.reducer

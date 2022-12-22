@@ -201,6 +201,15 @@ export const ArraySlice = createSlice({
                 }
             }
             state.arrays = newArray
+        },
+        deleteArraysSpacesSelected: (state, action) => {
+            let newArrays = []
+            for(let array of state.arrays){
+                if(action.payload.indexOf(array.spaceId) === -1){
+                    newArrays.push(array)
+                }
+            }
+            state.arrays = newArrays
         }
     }
 })
@@ -221,6 +230,7 @@ export const {
     addTask,
     deleteTask,
     moveTask,
-    deleteArrays} = ArraySlice.actions
+    deleteArrays,
+    deleteArraysSpacesSelected} = ArraySlice.actions
 
 export default ArraySlice.reducer
