@@ -34,7 +34,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
                     id_array_drag: id_array_drag, 
                     order_array_drag: order_array_drag, 
                     id_array_drop: id_array_drop, 
-                    order: data.order
+                    order_array_drop: data.order
                 }))
             }
         }}
