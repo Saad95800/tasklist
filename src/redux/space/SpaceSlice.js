@@ -69,11 +69,18 @@ export const SpaceSlice = createSlice({
         },
         setColor: (state, action) => {
             state.color = action.payload
-        }
+        },
+        deleteSpace: (state, action) => {
+            state.spaces.map((space, index)=>{
+                if(space.id === action.payload){
+                    state.spaces.splice(index, 1)
+                }
+            })
+        },
     }
 })
 
 
-export const {setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
+export const {deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
 
 export default SpaceSlice.reducer

@@ -1,3 +1,4 @@
+import { Satellite } from '@mui/icons-material'
 import { createSlice } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { addTaskFunc, deleteTaskFunc, getTaskById, updatetaskFunc } from '../../utils/functions'
@@ -62,7 +63,7 @@ const initialState = {
             title: 'En cours',
             tasks: [
             ],
-            spaceId: 1
+            spaceId: 2
         }
     ],
     displayFormAddArray: false,
@@ -191,6 +192,15 @@ export const ArraySlice = createSlice({
         },
         deleteTask: (state, action) => {
             state.arrays = deleteTaskFunc(action.payload, state.arrays)
+        },
+        deleteArrays: (state, action) => {
+            let newArray = []
+            for(let array of state.arrays){
+                if(array.spaceId.toString() !== action.payload.toString() ){
+                    newArray.push(array)
+                }
+            }
+            state.arrays = newArray
         }
     }
 })
@@ -210,6 +220,7 @@ export const {
     updateTask,
     addTask,
     deleteTask,
-    moveTask} = ArraySlice.actions
+    moveTask,
+    deleteArrays} = ArraySlice.actions
 
 export default ArraySlice.reducer
