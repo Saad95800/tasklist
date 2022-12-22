@@ -6,6 +6,12 @@ import { store } from '../redux/store'
 import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected } from '../redux/space/SpaceSlice'
 import { deleteArraysSpacesSelected } from '../redux/array/ArraySlice'
 
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
+
+
 export default function SpaceList() {
 
     const spaces = useSelector((state)=>state.space.spaces)
@@ -23,12 +29,19 @@ export default function SpaceList() {
             store.dispatch(deleteSpacesSelected())
             store.dispatch(deleteArraysSpacesSelected(spacesToDelete))
         }}>Supprimer en masse</div>
-        <div className="d-flex flex-wrap">
-            {spaces.map((space, index)=>{
-                return <SpaceItem key={index} space={space} />
-            })}
+        
+        <Box>
+            <Grid container spacing={2}>
+                {spaces.map((space, index)=>{
+                    return <Grid xs={6} md={4}>
+                                <SpaceItem key={index} space={space} />
+                            </Grid>
+                })}
+            </Grid>
+        </Box>
+
             {viewFormEditSpace && <FormEditSpace />}
-        </div>
+
 
     </>
   )

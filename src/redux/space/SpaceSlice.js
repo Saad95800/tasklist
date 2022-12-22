@@ -16,6 +16,81 @@ const initialState = {
         {
             id: 3,
             title: 'Tableau de bienvenue'
+        },
+        {
+            id: 3,
+            title: 'Tableau de bienvenue',
+            color: "#fff"
+        },
+        {
+            id: 4,
+            title: 'Space 4',
+            color: "#fff"
+        },
+        {
+            id: 5,
+            title: 'Space 5',
+            color: "#fff"
+        },
+        {
+            id: 6,
+            title: 'Space 6',
+            color: "#fff"
+        },
+        {
+            id: 7,
+            title: 'Space 7',
+            color: "#fff"
+        },
+        {
+            id: 8,
+            title: 'Space 8',
+            color: "#fff"
+        },
+        {
+            id: 9,
+            title: 'Space 9',
+            color: "#fff"
+        },
+        {
+            id: 10,
+            title: 'Space 10',
+            color: "#fff"
+        },
+        {
+            id: 11,
+            title: 'Space 11',
+            color: "#fff"
+        },
+        {
+            id: 12,
+            title: 'Space 12',
+            color: "#fff"
+        },
+        {
+            id: 13,
+            title: 'Space 13',
+            color: "#fff"
+        },
+        {
+            id: 14,
+            title: 'Space 14',
+            color: "#fff"
+        },
+        {
+            id: 15,
+            title: 'Space 15',
+            color: "#fff"
+        },
+        {
+            id: 16,
+            title: 'Space 16',
+            color: "#fff"
+        },
+        {
+            id: 17,
+            title: 'Space 17',
+            color: "#fff"
         }
     ],
     viewFormEditSpace: false,
