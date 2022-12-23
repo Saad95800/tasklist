@@ -70,7 +70,8 @@ const initialState = {
     displayFormDeleteArray: false,
     displayFormAddTask: false,
     displayFormEditTask: false,
-    displayFormEditArray: false
+    displayFormEditArray: false,
+    idTaskConfirmDelete: null
 }
 
 // On crée notre slice
@@ -210,12 +211,16 @@ export const ArraySlice = createSlice({
                 }
             }
             state.arrays = newArrays
-        }
+        },
+        setIdTaskConfirmDelete: (state, action) => {
+            state.idTaskConfirmDelete = action.payload
+        },
     }
 })
 
 
 export const {
+    setIdTaskConfirmDelete,
     setArrays, 
     setDisplayFormAddArray, 
     addTable, 

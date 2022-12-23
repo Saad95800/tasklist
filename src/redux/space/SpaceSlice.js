@@ -98,7 +98,8 @@ const initialState = {
     color: '#ffffff',
     spaceToEdit: null,
     contextSpace: 'edit',
-    spacesToDelete: []
+    spacesToDelete: [],
+    idSpaceConfirmDelete: null
 }
 
 // On crée notre slice
@@ -172,10 +173,13 @@ export const SpaceSlice = createSlice({
                 })
             }
         },
+        setIdSpaceConfirmDelete: (state, action) => {
+            state.idSpaceConfirmDelete = action.payload
+        },
     }
 })
 
 
-export const {deleteSpacesSelected, setSpacesToDelete, deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
+export const {setIdSpaceConfirmDelete, deleteSpacesSelected, setSpacesToDelete, deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
 
 export default SpaceSlice.reducer

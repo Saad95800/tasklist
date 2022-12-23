@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     viewMessage: false,
     texte: '',
-    typeMessage: ''
+    typeMessage: '',
+    viewModalConfirm: false
 }
 
 // On crée notre slice
@@ -22,11 +23,14 @@ export const MessageSlice = createSlice({
             state.viewMessage = false
             state.texte = ''
             state.typeMessage = ''
-        }
+        },
+        setViewModalConfirm: (state, action) => {
+            state.viewModalConfirm = action.payload
+        },
     }
 })
 
 
-export const {displayMessage, hideMessage} = MessageSlice.actions
+export const {displayMessage, hideMessage, setViewModalConfirm} = MessageSlice.actions
 
 export default MessageSlice.reducer

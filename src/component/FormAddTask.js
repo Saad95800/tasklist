@@ -21,7 +21,7 @@ export default function FormAddTask({arrays, closeFormAddTask}){
         >
         <Box sx={styleModal}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-            Supprimer un tableau
+            Ajouter une tâche
         </Typography>
 
         <div>

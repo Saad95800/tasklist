@@ -1,13 +1,32 @@
 import React from 'react'
-import { moveArray, moveTask } from '../redux/array/ArraySlice'
+import { deleteTask, moveArray, moveTask } from '../redux/array/ArraySlice'
 import { store } from '../redux/store'
 import Task from './Task'
+import PopinConfirmAction from '../component/PopinConfirmAction'
+import { useSelector } from 'react-redux'
+import { displayMessage } from '../redux/message/MessageSlice'
 
 // Le composant Array n'a pas d'états à modifier
 export default function Array({data, displayFormUpdateTask, displayFormArray}){
 
+    const viewModalConfirm = useSelector(state => state.message.viewModalConfirm)
+    const idTaskConfirmDelete = useSelector(state => state.array.idTaskConfirmDelete)
+    
+    const deleteTaskAction = (taskId) => {
+        store.dispatch(deleteTask(taskId))
+        store.dispatch(displayMessage({
+            texte: "Tâche supprimée avec succès",
+            typeMessage: 'success'
+        }))
+    }
     return (
-        <div className="p-2 m-3 rounded" style={{minWidth: '250px', backgroundColor: '#f3f3f3', minHeight: '100px', border: '#f3f3f3'}}
+        <>
+            { viewModalConfirm && <PopinConfirmAction 
+                                message={"êtes-vous sûr de vouloir supprimer cette tâche ?"}
+                                action={deleteTaskAction}
+                                params={[idTaskConfirmDelete]} />}
+
+<div className="p-2 m-3 rounded" style={{minWidth: '250px', backgroundColor: '#f3f3f3', minHeight: '100px', border: '#f3f3f3'}}
         draggable="true"
         onDragStart={(e)=>{
             e.stopPropagation()
@@ -49,5 +68,8 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
                 return <Task key={index} task={task} id_array={data.id} displayFormUpdateTask={displayFormUpdateTask} />
             })}
         </div>
+
+        </>
+        
     )
 }
