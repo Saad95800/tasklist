@@ -83,15 +83,15 @@ export const ArraySlice = createSlice({
             state.arrays = action.payload
         },
         addTable: (state, action) => { // Cette fonction va ajouter un nouvel objet (qui représente un tableau dans le state arrays (étape 5))
-            // Pour modifier un tableau state, on va d'abord créer une copie de ce tableau dans une variable newArrays
-            let newArrays = [...state.arrays]
-            newArrays.push({ // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
+
+            state.arrays.push({ // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
                 id: state.arrays.length + 1,
-                title: action.payload,
+                title: action.payload.title,
                 tasks: [],
-                order: state.arrays.length + 1
-            }) // On récrée un objet identiques aux objets tableaux déjà présents
-            state.arrays = newArrays // On écrase l'ancien state en mettrant à la place le nouveau tableay d'arrays crée qui contient le nouveau tableu ajouté
+                order: state.arrays.length + 1,
+                spaceId: action.payload.spaceId
+            })
+           
             state.displayFormAddArray = false
         },
         setDisplayFormAddArray: (state, action) => {
