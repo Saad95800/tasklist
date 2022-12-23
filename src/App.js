@@ -7,11 +7,17 @@ import {Routes, Route} from 'react-router-dom'
 import HomePage from './page/HomePage';
 import Login from './page/Login';
 import SpaceList from './page/SpaceList'
+import Message from './component/Message'
+import { useSelector } from 'react-redux';
 
 function App() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const texte = useSelector((state) => state.message.texte)
+  const viewMessage = useSelector((state) => state.message.viewMessage)
+  const typeMessage = useSelector((state) => state.message.typeMessage)
 
   const setData = (email, password) => {
     setEmail(email)
@@ -27,6 +33,7 @@ function App() {
 
   return (
     <div className="App">
+      {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
       <Routes>
         <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />

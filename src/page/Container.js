@@ -4,11 +4,10 @@ import FormAdd from '../component/FormAdd'
 import FormSup from '../component/FormSup'
 import FormAddTask from '../component/FormAddTask'
 import {Link, useParams} from 'react-router-dom'
-import FormEditTask from '../component/FormEditTask';
+import FormEditTask from '../component/FormEditTask'
 import FormEditArray from '../component/FormEditArray'
 import { useSelector } from 'react-redux'
-import { store } from '../redux/store';
-import Message from '../component/Message';
+import { store } from '../redux/store'
 
 import { 
     setArrays, 
@@ -24,9 +23,6 @@ import { getTaskById } from '../utils/functions'
 export default function Container(){
 
     const { id } = useParams()
-    const texte = useSelector((state) => state.message.texte)
-    const viewMessage = useSelector((state) => state.message.viewMessage)
-    const typeMessage = useSelector((state) => state.message.typeMessage)
 
     const arrays = useSelector((state) => state.array.arrays)
     const displayFormAddArray = useSelector((state) => state.array.displayFormAddArray)
@@ -89,7 +85,7 @@ export default function Container(){
     // étape 5 (Ajout de tableau) - Une fois le composant du formulaire d'ajout de tableau crée, on crée la fonction qui va ajouter un tableau dans le state arrays
     return (
         <div className="container">
-            {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
+            
             <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
             <Link to="/login" className="btn btn-primary">Login</Link>
             <Link to="/spaces" className="btn btn-primary">Espaces</Link>

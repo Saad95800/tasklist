@@ -4,6 +4,7 @@ import { setTitle, updateSpace, setViewFormEditSpace, addSpace, setColor } from 
 import { store } from '../../redux/store'
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
+import { displayMessage } from '../../redux/message/MessageSlice';
 
 export default function FormEditSpace() {
 
@@ -25,19 +26,34 @@ export default function FormEditSpace() {
     <div className="container-form">
         <form className="forms" onSubmit={(e)=>{
             e.preventDefault()
+
+            if(title.length === 0){
+                store.dispatch(displayMessage({
+                    texte: 'Veuillez saisir un titre',
+                    typeMessage: 'error'
+                }))
+                return
+            }
+            let message = ''
             // Code de modification du space
             if(contextSpace === 'edit'){
                 store.dispatch(updateSpace({
                     title_space: title,
                     id_space: spaceToEdit.id,
                     color: color
-                }))                
+                }))   
+                message = "Espace modifié avec succès !"    
             }else{
                 store.dispatch(addSpace({
                     title_space: title,
                     color: color
                 }))    
+                message = "Espace ajouté avec succès !" 
             }
+            store.dispatch(displayMessage({
+                    texte: message,
+                    typeMessage: 'success'
+                }))  
 
         }}>
         

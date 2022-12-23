@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
+import { displayMessage } from '../redux/message/MessageSlice'
 
 
 export default function SpaceList() {
@@ -28,6 +29,10 @@ export default function SpaceList() {
         <div className="btn btn-danger" onClick={()=>{
             store.dispatch(deleteSpacesSelected())
             store.dispatch(deleteArraysSpacesSelected(spacesToDelete))
+            store.dispatch(displayMessage({
+                texte: "Suppression en masse effectuée avec succès !",
+                typeMessage: 'success'
+            }))
         }}>Supprimer en masse</div>
         
         <Box>
