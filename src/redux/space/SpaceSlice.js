@@ -39,7 +39,7 @@ export const SpaceSlice = createSlice({
                     space.color = action.payload.color
                 }
             }
-    
+            localStorage.setItem('spaces', JSON.stringify(newSpaces))
             state.spaces = newSpaces
             state.viewFormEditSpace = false
         },
@@ -65,11 +65,14 @@ export const SpaceSlice = createSlice({
             state.color = action.payload
         },
         deleteSpace: (state, action) => {
+            let spacesStorage = JSON.parse(localStorage.getItem('spaces'))
             state.spaces.map((space, index)=>{
                 if(space.id === action.payload){
                     state.spaces.splice(index, 1)
+                    spacesStorage.splice(index, 1)
                 }
             })
+            localStorage.setItem('spaces', JSON.stringify(spacesStorage))
         },
         setSpacesToDelete: (state, action) => {
             
@@ -82,13 +85,17 @@ export const SpaceSlice = createSlice({
 
         },
         deleteSpacesSelected: (state, action) => {
+            let spacesStorage = JSON.parse(localStorage.getItem('spaces'))
             for(let spaceId of state.spacesToDelete){
                 state.spaces.map((space, index)=>{
                     if(spaceId === space.id){
                         state.spaces.splice(index, 1)
+                        spacesStorage.splice(index, 1)
                     }
                 })
             }
+            localStorage.setItem('spaces', JSON.stringify(spacesStorage))
+
         },
         setIdSpaceConfirmDelete: (state, action) => {
             state.idSpaceConfirmDelete = action.payload
