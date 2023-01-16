@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import SpaceItem from '../component/space/SpaceItem'
 import FormEditSpace from '../component/space/FormEditSpace'
 import { store } from '../redux/store'
-import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected, deleteSpace } from '../redux/space/SpaceSlice'
+import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected, deleteSpace, setSpaces } from '../redux/space/SpaceSlice'
 import { deleteArrays, deleteArraysSpacesSelected } from '../redux/array/ArraySlice'
 import PopinConfirmAction from '../component/PopinConfirmAction'
 
@@ -14,6 +14,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { displayMessage } from '../redux/message/MessageSlice'
 
 export default function SpaceList() {
+
+    useEffect(()=>{
+        // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
+        let data = JSON.parse(localStorage.getItem('spaces'))
+        console.log(data)
+        store.dispatch(setSpaces(data))
+    }, [])
 
     const spaces = useSelector((state)=>state.space.spaces)
     const viewFormEditSpace = useSelector((state)=>state.space.viewFormEditSpace)

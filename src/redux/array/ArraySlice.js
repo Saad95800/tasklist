@@ -5,64 +5,7 @@ import { addTaskFunc, deleteTaskFunc, getTaskById, updatetaskFunc } from '../../
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
-    arrays: [
-        {
-            id: 1,
-            order: 4,
-            title: 'Projet ressource',
-            tasks: [
-                {
-                    id: 1,
-                    intitule: 'Faire la page d\'accueil'
-                },
-                {
-                    id: 2,
-                    intitule: 'Faire le header'
-                },
-                {
-                    id: 3,
-                    intitule: 'Faire le footer'
-                }
-            ],
-            spaceId: 1
-        },
-        {
-            id: 2,
-            order: 3,
-            title: 'Sujet de la prochaine réunion',
-            tasks: [
-                {
-                    id: 4,
-                    intitule: 'Faire le systeme de connexion'
-                },
-                {
-                    id: 5,
-                    intitule: 'Créer la base de donnée'
-                }
-            ],
-            spaceId: 1
-        },
-        {
-            id: 3,
-            order: 2,
-            title: 'A faire',
-            tasks: [
-                {
-                    id: 16,
-                    intitule: 'Faire la pagination de la page d\'accueil'
-                }
-            ],
-            spaceId: 1
-        },
-        {
-            id: 4,
-            order: 1,
-            title: 'En cours',
-            tasks: [
-            ],
-            spaceId: 2
-        }
-    ],
+    arrays: [],
     displayFormAddArray: false,
     displayFormDeleteArray: false,
     displayFormAddTask: false,

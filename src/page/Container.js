@@ -24,7 +24,11 @@ export default function Container(){
 
     useEffect(()=>{
         // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
-    })
+        let data = JSON.parse(localStorage.getItem('arrays'))
+        console.log(data)
+        store.dispatch(setArrays(data))
+    }, [])
+
     const { id } = useParams()
 
     const arrays = useSelector((state) => state.array.arrays)
