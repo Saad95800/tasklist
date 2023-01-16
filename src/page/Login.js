@@ -38,6 +38,7 @@ export default function Login({setData, data}) {
                     {/* Dans cette fonction pour récupérer les valeurs saisies par l'utilisateur on utilise les states */}
                     
                     if(email === 'test@test.fr' && password === '0000'){
+                        sessionStorage.setItem('connected', '1')
                         setData(email, password)
                         return navigate('/')
                     }

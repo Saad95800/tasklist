@@ -25,7 +25,7 @@ function App() {
   }
 
   const checkPassword = () => {
-    if(email ==='test@test.fr' && password === '0000'){
+    if(sessionStorage.getItem('connected') === '1'){
       return true
     }
     return false
@@ -35,7 +35,7 @@ function App() {
     <div className="App">
       {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
       <Routes>
-        <Route path={`/login`} element={<Login setData={setData} data={{email: email, password: password}} />} />
+        <Route path={`/login`} element={checkPassword() ? <HomePage /> : <Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/`} element={checkPassword() ? <HomePage/> : <Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/tasklist/:id`} element={ checkPassword() ? <Container /> : <Login setData={setData} data={{email: email, password: password}} />} />
         <Route path={`/spaces`} element={ checkPassword() ? <SpaceList /> : <Login setData={setData} data={{email: email, password: password}} />} />

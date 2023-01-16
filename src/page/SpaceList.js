@@ -13,7 +13,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import { displayMessage } from '../redux/message/MessageSlice'
 
-
 export default function SpaceList() {
 
     const spaces = useSelector((state)=>state.space.spaces)

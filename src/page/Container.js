@@ -22,6 +22,9 @@ import { getTaskById } from '../utils/functions'
 // On créer un composant par élément visuel
 export default function Container(){
 
+    useEffect(()=>{
+        // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
+    })
     const { id } = useParams()
 
     const arrays = useSelector((state) => state.array.arrays)

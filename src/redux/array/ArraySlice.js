@@ -5,10 +5,7 @@ import { addTaskFunc, deleteTaskFunc, getTaskById, updatetaskFunc } from '../../
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
-    arrays: [ // Définit l'état ititial de l'application, c a d les données qui vont permettre d'avoir notre visuel de part
-        // On stock les tableaux dans un state parce qu'ils s'affichent dynamiquement
-        // c a d qu'on peut les supprimer, en ajouter ou les modifier (potentiellement)    
-        // on ne modifie jamais le html directement (appendChild, querySelector, mais on  modifie à chaque fois ce tableau de states)
+    arrays: [
         {
             id: 1,
             order: 4,
