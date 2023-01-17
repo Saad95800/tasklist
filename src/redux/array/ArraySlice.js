@@ -25,13 +25,18 @@ export const ArraySlice = createSlice({
         },
         addTable: (state, action) => { // Cette fonction va ajouter un nouvel objet (qui représente un tableau dans le state arrays (étape 5))
 
-            state.arrays.push({ // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
+            // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
+            let newArray = { 
                 id: state.arrays.length + 1,
                 title: action.payload.title,
                 tasks: [],
                 order: state.arrays.length + 1,
                 spaceId: action.payload.spaceId
-            })
+            }
+            let newArraysStorage = JSON.parse(localStorage.getItem('arrays'))
+            newArraysStorage.push(newArray)
+            localStorage.setItem('arrays', JSON.stringify(newArraysStorage))
+            state.arrays.push(newArray)
            
             state.displayFormAddArray = false
         },
@@ -63,6 +68,7 @@ export const ArraySlice = createSlice({
                 // Si on est dans l'itération du tableau qu'on veux supprimer (arr.id === Number(id)), 
                 // on ne rentrera pas dans le if, donc on ajoutera pas ce tableau dans notre nouveau tableau newArray
             }
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
             // NewArrays sera donc une copie de arrays mais sans le tableau qu'on souhaite supprimer
             state.arrays = newArrays // On écrase le state précédent avec le nouveau tableau qui ne contient pas le tableau qu'on veux supprimer
             // Lorsque le tableau est supprimé du state, il diparaitra automatiquement du html
@@ -103,6 +109,7 @@ export const ArraySlice = createSlice({
     
             }
 
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
             state.arrays = newArrays
             
         },
@@ -115,33 +122,43 @@ export const ArraySlice = createSlice({
                 }
             }
     
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
             state.arrays = newArrays
             state.DisplayFormEditArray = false
         },
         updateTask: (state, action) => {
+            let newArrays = updatetaskFunc(action.payload.id_task, action.payload.intitule, state.arrays)
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
             // On modifie dans le state la tâche
-            state.arrays = updatetaskFunc(action.payload.id_task, action.payload.intitule, state.arrays)
+            state.arrays = newArrays
             state.displayFormEditTask = false
         },
         moveTask: (state, action) => {
             let taskToMove = getTaskById(action.payload.id_task, state.arrays)
-            state.arrays = deleteTaskFunc(action.payload.id_task, state.arrays)
-            state.arrays = addTaskFunc(taskToMove.intitule, action.payload.id_array_drop, state.arrays)
+            let newArrays = deleteTaskFunc(action.payload.id_task, state.arrays)
+            newArrays = addTaskFunc(taskToMove.intitule, action.payload.id_array_drop, state.arrays)
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
+            state.arrays = newArrays
         },
         addTask: (state, action) => {
-            state.arrays = addTaskFunc(action.payload.title, action.payload.id_array, state.arrays)
+            let newArrays = addTaskFunc(action.payload.title, action.payload.id_array, state.arrays)
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
+            state.arrays = newArrays
         },
         deleteTask: (state, action) => {
-            state.arrays = deleteTaskFunc(action.payload, state.arrays)
+            let newArrays = deleteTaskFunc(action.payload, state.arrays)
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
+            state.arrays = newArrays
         },
         deleteArrays: (state, action) => {
-            let newArray = []
+            let newArrays = []
             for(let array of state.arrays){
                 if(array.spaceId.toString() !== action.payload.toString() ){
-                    newArray.push(array)
+                    newArrays.push(array)
                 }
             }
-            state.arrays = newArray
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
+            state.arrays = newArrays
         },
         deleteArraysSpacesSelected: (state, action) => {
             let newArrays = []
@@ -150,6 +167,7 @@ export const ArraySlice = createSlice({
                     newArrays.push(array)
                 }
             }
+            localStorage.setItem('arrays', JSON.stringify(newArrays))
             state.arrays = newArrays
         },
         setIdTaskConfirmDelete: (state, action) => {
