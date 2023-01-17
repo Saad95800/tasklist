@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const getTaskById = (id_task, arrays) => {
     let taskToMove = {}
 
+
     for(let array of arrays){
         for(let task of array.tasks){
             if(task.id.toString() === id_task.toString()){

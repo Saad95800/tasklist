@@ -18,15 +18,18 @@ import {
     setDisplayFormEditTask,
     setDisplayFormEditArray } from '../redux/array/ArraySlice';
 import { getTaskById } from '../utils/functions'
+import { setTasks } from '../redux/task/TaskSlice'
 
 // On créer un composant par élément visuel
 export default function Container(){
 
     useEffect(()=>{
         // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
-        let data = JSON.parse(localStorage.getItem('arrays'))
-        console.log(data)
-        store.dispatch(setArrays(data))
+        let arrays = JSON.parse(localStorage.getItem('arrays'))
+        let tasks = JSON.parse(localStorage.getItem('tasks'))
+
+        store.dispatch(setArrays(arrays))
+        store.dispatch(setTasks(tasks))
     }, [])
 
     const { id } = useParams()

@@ -133,13 +133,6 @@ export const ArraySlice = createSlice({
             state.arrays = newArrays
             state.displayFormEditTask = false
         },
-        moveTask: (state, action) => {
-            let taskToMove = getTaskById(action.payload.id_task, state.arrays)
-            let newArrays = deleteTaskFunc(action.payload.id_task, state.arrays)
-            newArrays = addTaskFunc(taskToMove.intitule, action.payload.id_array_drop, state.arrays)
-            localStorage.setItem('arrays', JSON.stringify(newArrays))
-            state.arrays = newArrays
-        },
         addTask: (state, action) => {
             let newArrays = addTaskFunc(action.payload.title, action.payload.id_array, state.arrays)
             localStorage.setItem('arrays', JSON.stringify(newArrays))
@@ -192,7 +185,6 @@ export const {
     updateTask,
     addTask,
     deleteTask,
-    moveTask,
     deleteArrays,
     deleteArraysSpacesSelected} = ArraySlice.actions
 

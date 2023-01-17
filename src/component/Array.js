@@ -1,5 +1,6 @@
 import React from 'react'
-import { deleteTask, moveArray, moveTask } from '../redux/array/ArraySlice'
+import { deleteTask, moveArray } from '../redux/array/ArraySlice'
+import { moveTask } from '../redux/task/TaskSlice'
 import { store } from '../redux/store'
 import Task from './Task'
 import PopinConfirmAction from '../component/PopinConfirmAction'
@@ -11,6 +12,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
 
     const viewModalConfirm = useSelector(state => state.message.viewModalConfirm)
     const idTaskConfirmDelete = useSelector(state => state.array.idTaskConfirmDelete)
+    const tasks = useSelector(state => state.task.tasks)
     
     const deleteTaskAction = (taskId) => {
         store.dispatch(deleteTask(taskId))
@@ -19,6 +21,15 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
             typeMessage: 'success'
         }))
     }
+
+    let taskElements = []
+
+    for(let task of tasks){
+        if(task.arrayId.toString() === data.id.toString()){
+            taskElements.push(<Task key={task.id} task={task} id_array={data.id} displayFormUpdateTask={displayFormUpdateTask} />)   
+        }
+    }
+
     return (
         <>
             { viewModalConfirm && <PopinConfirmAction 
@@ -64,9 +75,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
             <p onClick={()=>{
                 displayFormArray(data.id, data.title)
             }}>{data.title}</p>
-            {data.tasks.map((task, index)=>{
-                return <Task key={index} task={task} id_array={data.id} displayFormUpdateTask={displayFormUpdateTask} />
-            })}
+            {taskElements}
         </div>
 
         </>

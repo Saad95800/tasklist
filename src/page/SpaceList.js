@@ -7,7 +7,6 @@ import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected, deleteSpac
 import { deleteArrays, deleteArraysSpacesSelected } from '../redux/array/ArraySlice'
 import PopinConfirmAction from '../component/PopinConfirmAction'
 
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -16,10 +15,22 @@ import { displayMessage } from '../redux/message/MessageSlice'
 export default function SpaceList() {
 
     useEffect(()=>{
-        // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
-        let data = JSON.parse(localStorage.getItem('spaces'))
-        console.log(data)
-        store.dispatch(setSpaces(data))
+
+        const request = indexedDB.open('tasklist_db', 1)
+
+        request.onsuccess = function(event){
+            let db = event.target.result
+
+            let transaction = db.transaction(["space"], "readonly")
+            let storeSpace = transaction.objectStore("space")
+            let requestSpaces = storeSpace.getAll()
+
+            requestSpaces.onsuccess = function(event){
+                store.dispatch(setSpaces(event.target.result))
+            }
+        }
+
+        
     }, [])
 
     const spaces = useSelector((state)=>state.space.spaces)
