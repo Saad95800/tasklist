@@ -10,7 +10,8 @@ const initialState = {
     spaceToEdit: null,
     contextSpace: 'edit',
     spacesToDelete: [],
-    idSpaceConfirmDelete: null
+    idSpaceConfirmDelete: null,
+    connected: sessionStorage.getItem('connected')
 }
 
 // On crée notre slice
@@ -18,6 +19,9 @@ export const SpaceSlice = createSlice({
     name: 'message',
     initialState: initialState,
     reducers: {
+        setConnected: (state, action) => {
+            state.connected = action.payload
+        },
         setSpaces: (state, action) => {
             state.spaces = action.payload
         },
@@ -104,6 +108,6 @@ export const SpaceSlice = createSlice({
 })
 
 
-export const {setSpaces, setIdSpaceConfirmDelete, deleteSpacesSelected, setSpacesToDelete, deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
+export const {setConnected, setSpaces, setIdSpaceConfirmDelete, deleteSpacesSelected, setSpacesToDelete, deleteSpace, setTitle, setSpaceToEdit, setViewFormEditSpace, updateSpace, addSpace, setContextSpace, setColor} = SpaceSlice.actions
 
 export default SpaceSlice.reducer

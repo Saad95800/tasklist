@@ -18,6 +18,7 @@ function App() {
   const texte = useSelector((state) => state.message.texte)
   const viewMessage = useSelector((state) => state.message.viewMessage)
   const typeMessage = useSelector((state) => state.message.typeMessage)
+  const connected = useSelector((state) => state.space.connected)
 
   const setData = (email, password) => {
     setEmail(email)
@@ -25,7 +26,8 @@ function App() {
   }
 
   const checkPassword = () => {
-    if(sessionStorage.getItem('connected') === '1'){
+    console.log(sessionStorage.getItem('connected'))
+    if(connected === '1'){
       return true
     }
     return false

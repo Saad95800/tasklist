@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import { setConnected } from '../redux/space/SpaceSlice'
+import { store } from '../redux/store'
 
 // Quand on a un formulaire en react, on dot créer des states pour chaque champs modifiable
 export default function Login({setData, data}) {
@@ -39,6 +41,7 @@ export default function Login({setData, data}) {
                     
                     if(email === 'test@test.fr' && password === '0000'){
                         sessionStorage.setItem('connected', '1')
+                        store.dispatch(setConnected('1'))
                         setData(email, password)
                         return navigate('/')
                     }
