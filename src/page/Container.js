@@ -25,11 +25,29 @@ export default function Container(){
 
     useEffect(()=>{
         // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
-        let arrays = JSON.parse(localStorage.getItem('arrays'))
-        let tasks = JSON.parse(localStorage.getItem('tasks'))
 
-        store.dispatch(setArrays(arrays))
-        store.dispatch(setTasks(tasks))
+        const request = indexedDB.open('tasklist_db', 1)
+
+        request.onsuccess = function(event){
+            let db = event.target.result
+
+            let transactionArray = db.transaction(["array"], "readonly")
+            let storeArray = transactionArray.objectStore("array")
+            let requestArrays = storeArray.getAll()
+
+            requestArrays.onsuccess = function(event){
+                store.dispatch(setArrays(event.target.result))
+            }
+
+            let transactionTask = db.transaction(["task"], "readonly")
+            let storeTask = transactionTask.objectStore("task")
+            let requestTasks = storeTask.getAll()
+
+            requestTasks.onsuccess = function(event){
+                store.dispatch(setTasks(event.target.result))
+            }
+        }
+
     }, [])
 
     const { id } = useParams()

@@ -24,6 +24,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
 
     let taskElements = []
 
+    console.log(tasks)
     for(let task of tasks){
         if(task.arrayId.toString() === data.id.toString()){
             taskElements.push(<Task key={task.id} task={task} id_array={data.id} displayFormUpdateTask={displayFormUpdateTask} />)   

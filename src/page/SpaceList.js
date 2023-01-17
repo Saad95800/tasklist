@@ -30,7 +30,6 @@ export default function SpaceList() {
             }
         }
 
-        
     }, [])
 
     const spaces = useSelector((state)=>state.space.spaces)
