@@ -183,3 +183,88 @@ request.onsuccess = function(event) {
 
 
 }
+
+
+export const insertArrayIDB = (newArray) => {
+    console.log('here')
+    let request = indexedDB.open("tasklist_db", 1);
+
+    request.onsuccess = function(event) {
+        var db = event.target.result;
+      
+        // Commencer une transaction en mode écriture
+        var transaction = db.transaction("array", "readwrite");
+      
+        // Obtenir un accès à la table
+        var objectStore = transaction.objectStore("array");
+
+        // Effectuer la requête d'insertion
+        var request = objectStore.put(newArray);
+      
+        request.onsuccess = function(event) {
+          console.log("Tableau ajouté avec succès");
+        };
+
+        request.onerror = function(event) {
+          console.log("Une erreur est survenue lors de l'ajout du Tableau");
+        };
+      };
+}
+
+export const deleteArrayIDB = (arrayId) => {
+console.log(arrayId)
+    // Ouvrir la base de données
+var request = indexedDB.open("tasklist_db", 1);
+
+request.onsuccess = function(event) {
+  var db = event.target.result;
+
+  // Commencer une transaction en mode écriture
+  var transaction = db.transaction("array", "readwrite");
+
+  // Obtenir un accès à la table
+  var objectStore = transaction.objectStore("array");
+
+  // Effectuer la requête de suppression
+  var request = objectStore.delete(arrayId);
+
+  request.onsuccess = function(event) {
+    console.log("Tableau supprimé avec succès");
+  };
+
+  request.onerror = function(event) {
+    console.log("Une erreur est survenue lors de la suppression du Tableau");
+  };
+};
+
+
+}
+
+
+export const updateArrayIDB = (array) => {
+
+    // Ouvrir la base de données
+    var request = indexedDB.open("tasklist_db", 1);
+
+    request.onsuccess = function(event) {
+    var db = event.target.result;
+
+    // Commencer une transaction en mode écriture
+    var transaction = db.transaction("array", "readwrite");
+
+    // Obtenir un accès à la table
+    var arrayStore = transaction.objectStore("array");
+
+    // Effectuer la requête de modification
+    var request = arrayStore.put(array);
+
+    request.onsuccess = function(event) {
+        console.log("Tableau modifié avec succès");
+    };
+
+    request.onerror = function(event) {
+        console.log("Une erreur est survenue lors de la modification du Tableau");
+    };
+    };
+
+}

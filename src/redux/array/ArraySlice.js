@@ -1,7 +1,7 @@
 import { Satellite } from '@mui/icons-material'
 import { createSlice } from '@reduxjs/toolkit'
 import produce from 'immer'
-import { addTaskFunc, deleteTaskFunc, getTaskById, updatetaskFunc } from '../../utils/functions'
+import { addTaskFunc, deleteArrayIDB, deleteTaskFunc, getTaskById, insertArrayIDB, updateArrayIDB, updatetaskFunc } from '../../utils/functions'
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -27,14 +27,13 @@ export const ArraySlice = createSlice({
 
             // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
             let newArray = { 
-                id: state.arrays.length + 1,
+                id: (state.arrays.length + 1).toString(),
                 title: action.payload.title,
                 order: state.arrays.length + 1,
                 spaceId: action.payload.spaceId
             }
-            let newArraysStorage = JSON.parse(localStorage.getItem('arrays'))
-            newArraysStorage.push(newArray)
-            localStorage.setItem('arrays', JSON.stringify(newArraysStorage))
+
+            insertArrayIDB(newArray)
             state.arrays.push(newArray)
            
             state.displayFormAddArray = false
@@ -55,19 +54,21 @@ export const ArraySlice = createSlice({
             state.displayFormEditArray = action.payload
         },
         deleteTable: (state, action) => {
+
+            deleteArrayIDB(action.payload.toString())
             // Pour supprimer un élément d'un state tableau, on crée d'abord un tableau vide
             let newArrays = []
 
             // On parcours le state en cours (liste de tableaux)
             for(let arr of state.arrays){
-                if(arr.id !== Number(action.payload)){ // Si le tableau dans l'itération n'est pas celui qu'on veux supprimer, 
+                if(arr.id.toString() !== Number(action.payload.toString())){ // Si le tableau dans l'itération n'est pas celui qu'on veux supprimer, 
                                             // on le met dans le tableau newArray
                     newArrays.push(arr)
                 }
                 // Si on est dans l'itération du tableau qu'on veux supprimer (arr.id === Number(id)), 
                 // on ne rentrera pas dans le if, donc on ajoutera pas ce tableau dans notre nouveau tableau newArray
             }
-            localStorage.setItem('arrays', JSON.stringify(newArrays))
+            
             // NewArrays sera donc une copie de arrays mais sans le tableau qu'on souhaite supprimer
             state.arrays = newArrays // On écrase le state précédent avec le nouveau tableau qui ne contient pas le tableau qu'on veux supprimer
             // Lorsque le tableau est supprimé du state, il diparaitra automatiquement du html
@@ -113,6 +114,14 @@ export const ArraySlice = createSlice({
             
         },
         updateArray: (state, action) => {
+
+            let newArray = {
+                id: action.payload.id_array,
+                title: action.payload.title_array
+            }
+
+            updateArrayIDB(newArray)
+
             let newArrays = [...state.arrays]
     
             for(let array of newArrays){
@@ -121,7 +130,7 @@ export const ArraySlice = createSlice({
                 }
             }
     
-            localStorage.setItem('arrays', JSON.stringify(newArrays))
+
             state.arrays = newArrays
             state.DisplayFormEditArray = false
         },

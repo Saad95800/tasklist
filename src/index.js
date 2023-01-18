@@ -27,7 +27,7 @@ request.onupgradeneeded = function(event){
   }
 
 
-  let arrays = JSON.parse(`[{"id":"1","order":3,"title":"Projet ressourcesssssss","tasks":[{"id":"1","intitule":"Faire la page d'accueil"},{"id":"3","intitule":"Faire le footerrrrrrrrr"},{"id":"4cd86544-a120-44ff-9cd6-07683fa2d5c6","intitule":"ddddd"}],"spaceId":"2"},{"id":"2","order":4,"title":"Sujet de la prochaine réunion","tasks":[{"id":"4","intitule":"Faire le systeme de connexion"},{"id":"d42b226b-f2e9-42c3-a56a-5d0ff597ac0c","intitule":"Faire le header"}],"spaceId":"2"},{"id":4,"order":1,"title":"En cours","tasks":[],"spaceId":"2"},{"id":5,"title":"aze","tasks":[],"order":5,"spaceId":"2"}]`)
+  let arrays = JSON.parse(`[{"id":"1","order":3,"title":"Projet ressourcesssssss","tasks":[{"id":"1","intitule":"Faire la page d'accueil"},{"id":"3","intitule":"Faire le footerrrrrrrrr"},{"id":"4cd86544-a120-44ff-9cd6-07683fa2d5c6","intitule":"ddddd"}],"spaceId":"2"},{"id":"2","order":4,"title":"Sujet de la prochaine réunion","tasks":[{"id":"4","intitule":"Faire le systeme de connexion"},{"id":"d42b226b-f2e9-42c3-a56a-5d0ff597ac0c","intitule":"Faire le header"}],"spaceId":"2"},{"id":"5","title":"aze","tasks":[],"order":5,"spaceId":"2"}]`)
   for(let array of arrays){
     storeArray.put({
       id: array.id,
