@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid';
-import { insertSpaceIDB } from '../../utils/functions';
+import { deleteSpaceIDB, insertSpaceIDB, updateSpaceIDB } from '../../utils/functions';
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -44,7 +44,13 @@ export const SpaceSlice = createSlice({
                     space.color = action.payload.color
                 }
             }
-            localStorage.setItem('spaces', JSON.stringify(newSpaces))
+            
+            updateSpaceIDB({
+                id: action.payload.id_space.toString(),
+                title: action.payload.title_space,
+                color: action.payload.color
+            })
+
             state.spaces = newSpaces
             state.viewFormEditSpace = false
         },
@@ -78,7 +84,9 @@ export const SpaceSlice = createSlice({
                     spacesStorage.splice(index, 1)
                 }
             })
-            localStorage.setItem('spaces', JSON.stringify(spacesStorage))
+            
+            deleteSpaceIDB(action.payload)
+
         },
         setSpacesToDelete: (state, action) => {
             
