@@ -150,3 +150,36 @@ request.onsuccess = function(event) {
 
 
 }
+
+export const deleteSpacesIDB = (spacesId) => {
+
+    // Ouvrir la base de données
+var request = indexedDB.open("tasklist_db", 1);
+
+request.onsuccess = function(event) {
+  var db = event.target.result;
+
+  // Commencer une transaction en mode écriture
+  var transaction = db.transaction("space", "readwrite");
+
+  // Obtenir un accès à la table
+  var objectStore = transaction.objectStore("space");
+
+  for(let spaceId of spacesId){
+      // Effectuer la requête de suppression
+    var request = objectStore.delete(spaceId);
+
+    request.onsuccess = function(event) {
+        console.log("Space supprimé avec succès");
+    };
+
+    request.onerror = function(event) {
+        console.log("Une erreur est survenue lors de la suppression du Space");
+    };
+  }
+
+
+};
+
+
+}

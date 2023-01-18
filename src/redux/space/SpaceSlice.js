@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid';
-import { deleteSpaceIDB, insertSpaceIDB, updateSpaceIDB } from '../../utils/functions';
+import { deleteSpaceIDB, deleteSpacesIDB, insertSpaceIDB, updateSpaceIDB } from '../../utils/functions';
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -99,16 +99,16 @@ export const SpaceSlice = createSlice({
 
         },
         deleteSpacesSelected: (state, action) => {
-            let spacesStorage = JSON.parse(localStorage.getItem('spaces'))
+            
+            deleteSpacesIDB([...state.spacesToDelete])
+
             for(let spaceId of state.spacesToDelete){
                 state.spaces.map((space, index)=>{
                     if(spaceId === space.id){
                         state.spaces.splice(index, 1)
-                        spacesStorage.splice(index, 1)
                     }
                 })
             }
-            localStorage.setItem('spaces', JSON.stringify(spacesStorage))
 
         },
         setIdSpaceConfirmDelete: (state, action) => {
