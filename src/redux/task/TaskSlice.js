@@ -44,6 +44,7 @@ export const TaskSlice = createSlice({
             })
         },
         deleteTask: (state, action) => {
+            // 
                 state.tasks.map((task, index)=>{
                     if(task.id.toString() === action.payload.toString()){
                         state.tasks.splice(index, 1)

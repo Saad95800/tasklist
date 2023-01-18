@@ -70,25 +70,25 @@ export const updatetaskFunc = (id_task, intitule, arrays) => {
 }
 
 export const insertSpaceIDB = (newSpace) => {
-    let request = indexedDB.open("tasklist_db", 1);
+    let request = indexedDB.open("tasklist_db", 1); // On crée la requete de connexion a la BDD
 
-    request.onsuccess = function(event) {
+    request.onsuccess = function(event) { // Si la connexion a la BDD a réussi
         var db = event.target.result;
       
         // Commencer une transaction en mode écriture
-        var transaction = db.transaction("space", "readwrite");
+        var transaction = db.transaction("space", "readwrite"); // On crée une transaction pour préparer nos action dans la BDD
       
         // Obtenir un accès à la table
-        var objectStore = transaction.objectStore("space");
+        var spaceStore = transaction.objectStore("space"); // On accede à notre table Space
 
         // Effectuer la requête d'insertion
-        var request = objectStore.add(newSpace);
+        var request = spaceStore.add(newSpace); // On crée la requete d'insertion de space a la BDD
       
-        request.onsuccess = function(event) {
+        request.onsuccess = function(event) { // Ce qui se passe si l'insertion a réussi
           console.log("Space ajouté avec succès");
         };
 
-        request.onerror = function(event) {
+        request.onerror = function(event) { // Ce qui se passe si l'insertiona échoué
           console.log("Une erreur est survenue lors de l'ajout du space");
         };
       };
