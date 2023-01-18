@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid';
+import { insertSpaceIDB } from '../../utils/functions';
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -55,10 +56,11 @@ export const SpaceSlice = createSlice({
                 color: action.payload.color
             }
             newSpaces.push(newSpace)
-            let spacesStorage = JSON.parse(localStorage.getItem('spaces'))
-            spacesStorage.push(newSpace)
-            spacesStorage = JSON.stringify(spacesStorage)
-            localStorage.setItem('spaces', spacesStorage)
+
+            // Ajout dans indexedDB
+            insertSpaceIDB(newSpace)
+
+            // AJout dans le state
             state.spaces = newSpaces
             state.viewFormEditSpace = false
         },
