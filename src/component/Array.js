@@ -1,6 +1,6 @@
 import React from 'react'
-import { deleteTask, moveArray } from '../redux/array/ArraySlice'
-import { moveTask } from '../redux/task/TaskSlice'
+import { moveArray } from '../redux/array/ArraySlice'
+import { moveTask, deleteTask } from '../redux/task/TaskSlice'
 import { store } from '../redux/store'
 import Task from './Task'
 import PopinConfirmAction from '../component/PopinConfirmAction'

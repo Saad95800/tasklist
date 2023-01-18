@@ -53,6 +53,7 @@ export default function Container(){
     const { id } = useParams()
 
     const arrays = useSelector((state) => state.array.arrays)
+    const tasks = useSelector((state) => state.task.tasks)
     const displayFormAddArray = useSelector((state) => state.array.displayFormAddArray)
     const displayFormDeleteArray = useSelector((state) => state.array.displayFormDeleteArray)
     const displayFormAddTask = useSelector((state) => state.array.displayFormAddTask)
@@ -85,7 +86,7 @@ export default function Container(){
     const displayFormUpdateTask = (id_task) =>{
         store.dispatch(setDisplayFormEditTask(true)) // On affiche le formulaire de modification de tâche
         // On récupère la tâche par son id et on la transmet au formulaire de modifiction de tâche
-        setTaskToEdit(getTaskById(id_task, arrays))
+        setTaskToEdit(getTaskById(id_task, tasks))
     }
 
     // étape 2 (Supression de tableau) - Créer un composant qui va contenir un formualire de suppression de tableau

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid';
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
     tasks: []
@@ -13,13 +14,18 @@ export const TaskSlice = createSlice({
         setTasks: (state, action) => {
             state.tasks = action.payload
         },
-        // updateTask: (state, action) => {
-        //     let newArrays = updatetaskFunc(action.payload.id_task, action.payload.intitule, state.arrays)
-        //     localStorage.setItem('arrays', JSON.stringify(newArrays))
-        //     // On modifie dans le state la tâche
-        //     state.arrays = newArrays
-        //     state.displayFormEditTask = false
-        // },
+        updateTask: (state, action) => {
+            // On modifie dans le state la tâche
+
+            let newTasks = [...state.tasks]
+            for(let task of newTasks){
+                if(task.id === action.payload.id_task){
+                    task.intitule = action.payload.intitule
+                }
+            }
+
+            state.tasks = newTasks
+        },
         moveTask: (state, action) => {
             
             let newTasks = [...state.tasks]
@@ -30,23 +36,31 @@ export const TaskSlice = createSlice({
             }
             state.arrays = newTasks
         },
-        // addTask: (state, action) => {
-        //     let newArrays = addTaskFunc(action.payload.title, action.payload.id_array, state.arrays)
-        //     localStorage.setItem('arrays', JSON.stringify(newArrays))
-        //     state.arrays = newArrays
-        // },
-        // deleteTask: (state, action) => {
-        //     let newArrays = deleteTaskFunc(action.payload, state.arrays)
-        //     localStorage.setItem('arrays', JSON.stringify(newArrays))
-        //     state.arrays = newArrays
-        // },
+        addTask: (state, action) => {
+            state.tasks.push({
+                id: uuidv4(),
+                intitule: action.payload.title,
+                arrayId: action.payload.id_array
+            })
+        },
+        deleteTask: (state, action) => {
+                state.tasks.map((task, index)=>{
+                    if(task.id.toString() === action.payload.toString()){
+                        state.tasks.splice(index, 1)
+                    }
+                })
+            
+        },
     }
 })
 
 
 export const {
     setTasks,
-    moveTask
+    moveTask,
+    updateTask,
+    addTask,
+    deleteTask
 } = TaskSlice.actions
 
 export default TaskSlice.reducer

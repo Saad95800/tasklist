@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import { setDisplayFormEditTask, updateTask } from '../redux/array/ArraySlice'
+import { setDisplayFormEditTask } from '../redux/array/ArraySlice'
 import { displayMessage } from '../redux/message/MessageSlice'
 import { store } from '../redux/store'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../utils/data'
+import { updateTask } from '../redux/task/TaskSlice'
 
 export default function FormEditTask({task,closeFromEditTask}) {
 
