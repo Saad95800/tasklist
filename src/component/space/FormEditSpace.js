@@ -68,14 +68,14 @@ export default function FormEditSpace() {
                         message = "Espace modifié avec succès !"    
                     }else{
                         let newSpace = {
-                            id: uuidv4(),
                             title: title,
                             color: color
                         }
 
                         let spaceRef = firebase.firestore().collection('space')
                         await spaceRef.add(newSpace)
-                        .then(()=>{
+                        .then((docRef)=>{
+                            newSpace.id = docRef.id
                             store.dispatch(addSpace(newSpace))    
                             message = "Espace ajouté avec succès !" 
                         })

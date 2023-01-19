@@ -36,8 +36,16 @@ export default function SpaceList() {
     const idSpaceConfirmDelete = useSelector((state)=>state.space.idSpaceConfirmDelete)
     
     const deleteSpaceAction = (spaceId) => {
-        store.dispatch(deleteSpace(spaceId))
-        store.dispatch(deleteArrays(spaceId))
+
+        let spaceRef = firebase.firestore().collection("space")
+
+        let docRef = spaceRef.doc(spaceId)
+
+        docRef.delete().then(()=>{
+            store.dispatch(deleteSpace(spaceId))
+            store.dispatch(deleteArrays(spaceId))            
+        })
+
     }
   return (
     <>
