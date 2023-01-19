@@ -6,29 +6,26 @@ import { store } from '../redux/store'
 import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected, deleteSpace, setSpaces } from '../redux/space/SpaceSlice'
 import { deleteArrays, deleteArraysSpacesSelected } from '../redux/array/ArraySlice'
 import PopinConfirmAction from '../component/PopinConfirmAction'
-
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2';
 import { displayMessage } from '../redux/message/MessageSlice'
+import firebase from 'firebase'
 
 export default function SpaceList() {
 
-    useEffect(()=>{
+    useEffect(async ()=>{
 
-        const request = indexedDB.open('tasklist_db', 1)
+        let spaceRef = firebase.firestore().collection("space")
+        let spaces = []
+        await spaceRef.get().then((querySnapshot)=>{
 
-        request.onsuccess = function(event){
-            let db = event.target.result
+            querySnapshot.forEach((space)=>{
+                spaces.push(space.data())
+            })
 
-            let transaction = db.transaction(["space"], "readonly")
-            let storeSpace = transaction.objectStore("space")
-            let requestSpaces = storeSpace.getAll()
+        })
 
-            requestSpaces.onsuccess = function(event){
-                store.dispatch(setSpaces(event.target.result))
-            }
-        }
+        store.dispatch(setSpaces(spaces))
 
     }, [])
 
