@@ -268,3 +268,86 @@ export const updateArrayIDB = (array) => {
     };
 
 }
+
+export const insertTaskIDB = (newTask) => {
+
+    let request = indexedDB.open("tasklist_db", 1);
+
+    request.onsuccess = function(event) {
+        var db = event.target.result;
+      
+        // Commencer une transaction en mode écriture
+        var transaction = db.transaction("task", "readwrite");
+      
+        // Obtenir un accès à la table
+        var objectStore = transaction.objectStore("task");
+
+        // Effectuer la requête d'insertion
+        var request = objectStore.put(newTask);
+      
+        request.onsuccess = function(event) {
+          console.log("Tâche ajouté avec succès");
+        };
+
+        request.onerror = function(event) {
+          console.log("Une erreur est survenue lors de l'ajout du Tâche");
+        };
+      };
+}
+
+export const deleteTaskIDB = (taskId) => {
+
+        // Ouvrir la base de données
+    var request = indexedDB.open("tasklist_db", 1);
+    
+    request.onsuccess = function(event) {
+      var db = event.target.result;
+    
+      // Commencer une transaction en mode écriture
+      var transaction = db.transaction("task", "readwrite");
+    
+      // Obtenir un accès à la table
+      var objectStore = transaction.objectStore("task");
+    
+      // Effectuer la requête de suppression
+      var request = objectStore.delete(taskId);
+    
+      request.onsuccess = function(event) {
+        console.log("Tâche supprimé avec succès");
+      };
+    
+      request.onerror = function(event) {
+        console.log("Une erreur est survenue lors de la suppression du Tâche");
+      };
+    };
+    
+    
+    }
+
+    export const updateTaskIDB = (task) => {
+
+        // Ouvrir la base de données
+        var request = indexedDB.open("tasklist_db", 1);
+    
+        request.onsuccess = function(event) {
+        var db = event.target.result;
+    
+        // Commencer une transaction en mode écriture
+        var transaction = db.transaction("task", "readwrite");
+    
+        // Obtenir un accès à la table
+        var taskStore = transaction.objectStore("task");
+    
+        // Effectuer la requête de modification
+        var request = taskStore.put(task);
+    
+        request.onsuccess = function(event) {
+            console.log("Tâche modifié avec succès");
+        };
+    
+        request.onerror = function(event) {
+            console.log("Une erreur est survenue lors de la modification du Tâche");
+        };
+        };
+    
+    }
