@@ -4,12 +4,12 @@ import { setTitle, updateSpace, setViewFormEditSpace, addSpace, setColor } from 
 import { store } from '../../redux/store'
 import CloseIcon from '@mui/icons-material/Close'
 import { displayMessage } from '../../redux/message/MessageSlice'
-
+import firebase from 'firebase'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../../utils/data'
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default function FormEditSpace() {
 
@@ -46,7 +46,7 @@ export default function FormEditSpace() {
           </Typography>
           
           <div>
-            <form className="forms" onSubmit={(e)=>{
+            <form className="forms" onSubmit={async (e)=>{
                     e.preventDefault()
 
                     if(title.length === 0){
@@ -57,6 +57,7 @@ export default function FormEditSpace() {
                         return
                     }
                     let message = ''
+                    let typeMessage = 'success'
                     // Code de modification du space
                     if(contextSpace === 'edit'){
                         store.dispatch(updateSpace({
@@ -66,15 +67,27 @@ export default function FormEditSpace() {
                         }))   
                         message = "Espace modifié avec succès !"    
                     }else{
-                        store.dispatch(addSpace({
-                            title_space: title,
+                        let newSpace = {
+                            id: uuidv4(),
+                            title: title,
                             color: color
-                        }))    
-                        message = "Espace ajouté avec succès !" 
+                        }
+
+                        let spaceRef = firebase.firestore().collection('space')
+                        await spaceRef.add(newSpace)
+                        .then(()=>{
+                            store.dispatch(addSpace(newSpace))    
+                            message = "Espace ajouté avec succès !" 
+                        })
+                        .catch(()=>{
+                            message = "Echec de l'ajout de l'espace !" 
+                            typeMessage = 'error'
+                        })
+                        
                     }
                     store.dispatch(displayMessage({
                             texte: message,
-                            typeMessage: 'success'
+                            typeMessage: typeMessage
                         }))  
 
                 }}>
