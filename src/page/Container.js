@@ -8,6 +8,7 @@ import FormEditTask from '../component/FormEditTask'
 import FormEditArray from '../component/FormEditArray'
 import { useSelector } from 'react-redux'
 import { store } from '../redux/store'
+import firebase from 'firebase'
 
 import { 
     setArrays, 
@@ -23,30 +24,33 @@ import { setTasks } from '../redux/task/TaskSlice'
 // On créer un composant par élément visuel
 export default function Container(){
 
-    useEffect(()=>{
-        // Code qui récupère les arrays dans le localstorage et le met dans le state arrays
-
-        const request = indexedDB.open('tasklist_db', 1)
-
-        request.onsuccess = function(event){
-            let db = event.target.result
-
-            let transactionArray = db.transaction(["array"], "readonly")
-            let storeArray = transactionArray.objectStore("array")
-            let requestArrays = storeArray.getAll()
-
-            requestArrays.onsuccess = function(event){
-                store.dispatch(setArrays(event.target.result))
-            }
-
-            let transactionTask = db.transaction(["task"], "readonly")
-            let storeTask = transactionTask.objectStore("task")
-            let requestTasks = storeTask.getAll()
-
-            requestTasks.onsuccess = function(event){
-                store.dispatch(setTasks(event.target.result))
-            }
+    useEffect(async ()=>{
+ 
+        const getDataArray = async () => {
+            let arrayRef = firebase.firestore().collection("array")
+            let arrays = []
+            await arrayRef.get().then((querySnapshot)=>{
+                querySnapshot.forEach((array)=>{
+                    arrays.push(array.data())
+                })
+            })
+    
+            store.dispatch(setArrays(arrays))
+    
+            ///
+    
+            let taskRef = firebase.firestore().collection("task")
+            let tasks = []
+            await taskRef.get().then((querySnapshot)=>{
+                querySnapshot.forEach((task)=>{
+                    tasks.push(task.data())
+                })
+            })
+    
+            store.dispatch(setTasks(tasks))
         }
+
+        getDataArray()
 
     }, [])
 
