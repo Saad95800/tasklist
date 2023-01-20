@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../utils/data'
+import firebase from 'firebase'
 
 export default function FormEditArray({array, closeFromEditArray}) {
 
@@ -24,17 +25,40 @@ export default function FormEditArray({array, closeFromEditArray}) {
                 Modifier un tableau
             </Typography>
             <div>
-                <form className="forms d-flex flex-column" onSubmit={(e)=>{
+                <form className="forms d-flex flex-column" onSubmit={async (e)=>{
                         e.preventDefault()
                         if(titleArray.length === 0){
                             store.dispatch(displayMessage({texte:'Veuillez saisir un titre de tableau', typeMessage: 'error'}))
                             return
                         }
-                        store.dispatch(updateArray({
-                            id_array: array.id, 
-                            title_array: titleArray
-                        }))
-                        store.dispatch(displayMessage({texte:'Tableau modifié avec succès !', typeMessage: 'success'}))
+                        console.log(array)
+                        let newArray = {
+                            id: array.id.toString(),
+                            title: titleArray,
+                            order: array.order,
+                            spaceId: array.spaceId
+                        }
+                        console.log(newArray)
+                        let message = ''
+                        let typeMessage = 'success'
+
+                        let arrayRef = firebase.firestore().collection('array')
+                        let arrayDoc = arrayRef.doc(array.id.toString());
+                        await arrayDoc.update(newArray)
+                        .then((docRef)=>{
+                            newArray.id = array.id.toString()
+                            store.dispatch(updateArray(newArray))    
+                            message = "Tableau mis à jour avec succès !" 
+                            typeMessage = "success"
+                        })
+                        .catch((error)=>{
+                            console.log('catch')
+                            console.log(error)
+                            message = "Echec de la mise à jour de du tableau !" 
+                            typeMessage = 'error'
+                        })
+
+                        store.dispatch(displayMessage({texte: message, typeMessage: typeMessage}))
                         store.dispatch(setDisplayFormEditArray(false))
                     }}
                     onClick={(e)=>{

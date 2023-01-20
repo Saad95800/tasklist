@@ -7,13 +7,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../utils/data'
 import { useSelector } from 'react-redux';
-
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useParams } from 'react-router';
-
+import firebase from 'firebase'
 
 export default function FormAdd({addTable, closeFormAddArray}){
 // étape 1 - Créer le HTML statique du composant FormAdd
@@ -38,16 +33,36 @@ export default function FormAdd({addTable, closeFormAddArray}){
             </Typography>
 
             <div>
-                <form className="forms" onSubmit={(e)=>{ {/* étape 5 - Créer la fonction de validation de formulaire */}
+                <form className="forms" onSubmit={async (e)=>{ {/* étape 5 - Créer la fonction de validation de formulaire */}
                     e.preventDefault()
                     if(title.length > 0){
                         {/* Dans cette fonction pour récupérer =le titre saisi par l'utilisateur, j'utilise le state title */}
                         {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra d'ajouter un tableau dans le state arrays */}
-                        store.dispatch(addTable({
+                        
+                        let newArray = {
                             title: title,
-                            spaceId: id
-                        }))
-                        store.dispatch(displayMessage({texte:'Tableau ajouté avec succès !', typeMessage: 'success'}))
+                            spaceId: id,
+                            order: 1
+                        }
+
+                        let message = ''
+                        let typeMessage = 'success'
+
+                        let arrayRef = firebase.firestore().collection("array")
+
+                        await arrayRef.add(newArray)
+                        .then((docRef)=>{
+                            newArray.id = docRef.id
+                                store.dispatch(addTable(newArray))
+                                message = "Tableau crée avec success !"
+                                typeMessage = 'success'
+                        })
+                        .catch(()=>{
+                            message = "Echec lors de l'ajout du tableau"
+                            typeMessage = 'error'
+                        })
+                        
+                        store.dispatch(displayMessage({texte: message, typeMessage: typeMessage}))
                         store.dispatch(setDisplayFormAddArray(false))
                     }else{
                         store.dispatch(displayMessage({texte: 'Veuillez saisir un titre de tableau', typeMessage:'error'}))

@@ -158,35 +158,6 @@ request.onsuccess = function(event) {
 
 }
 
-
-export const updateArrayIDB = (array) => {
-
-    // Ouvrir la base de données
-    var request = indexedDB.open("tasklist_db", 1);
-
-    request.onsuccess = function(event) {
-    var db = event.target.result;
-
-    // Commencer une transaction en mode écriture
-    var transaction = db.transaction("array", "readwrite");
-
-    // Obtenir un accès à la table
-    var arrayStore = transaction.objectStore("array");
-
-    // Effectuer la requête de modification
-    var request = arrayStore.put(array);
-
-    request.onsuccess = function(event) {
-        console.log("Tableau modifié avec succès");
-    };
-
-    request.onerror = function(event) {
-        console.log("Une erreur est survenue lors de la modification du Tableau");
-    };
-    };
-
-}
-
 export const insertTaskIDB = (newTask) => {
 
     let request = indexedDB.open("tasklist_db", 1);

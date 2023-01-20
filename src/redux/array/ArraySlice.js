@@ -1,7 +1,7 @@
 import { Satellite } from '@mui/icons-material'
 import { createSlice } from '@reduxjs/toolkit'
 import produce from 'immer'
-import { addTaskFunc, deleteArrayIDB, deleteTaskFunc, getTaskById, insertArrayIDB, updateArrayIDB, updatetaskFunc } from '../../utils/functions'
+import { addTaskFunc, deleteArrayIDB, deleteTaskFunc, getTaskById, insertArrayIDB, updatetaskFunc } from '../../utils/functions'
 import { v4 as uuidv4 } from 'uuid';
 
 // On crée ici tout nos states liées à l'affichage des messages
@@ -120,16 +120,15 @@ export const ArraySlice = createSlice({
                 title: action.payload.title_array
             }
 
-            updateArrayIDB(newArray)
-
             let newArrays = [...state.arrays]
     
-            for(let array of newArrays){
-                if(array.id.toString() === action.payload.id_array.toString()){
-                    array.title = action.payload.title_array
-                }
-            }
-    
+            // for(let array of newArrays){
+            //     console.log(array)
+            //     console.log(action.payload)
+            //     if(array.id.toString() === action.payload.id.toString()){
+            //         array.title = action.payload.title_array
+            //     }
+            // }
 
             state.arrays = newArrays
             state.DisplayFormEditArray = false

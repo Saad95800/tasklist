@@ -70,7 +70,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
         }}
         >
             <p onClick={()=>{
-                displayFormArray(data.id, data.title)
+                displayFormArray(data.id, data.title, data.order, data.spaceId)
             }}>{data.title}</p>
             {taskElements}
         </div>

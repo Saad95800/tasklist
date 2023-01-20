@@ -31,6 +31,7 @@ export default function Container(){
             let arrays = []
             await arrayRef.get().then((querySnapshot)=>{
                 querySnapshot.forEach((array)=>{
+                    console.log(array.data())
                     arrays.push(array.data())
                 })
             })
@@ -75,10 +76,12 @@ export default function Container(){
     const [taskToEdit, setTaskToEdit] = useState(null)
     const [arrayToEdit, setArrayToEdit] = useState(null)
 
-    const displayFormArray = (id_array, title_array) => {
+    const displayFormArray = (id_array, title_array, order, spaceId) => {
         setArrayToEdit({
             id: id_array,
-            title: title_array
+            title: title_array,
+            order: order,
+            spaceId: spaceId
         })
         store.dispatch(setDisplayFormEditArray(true))
     }

@@ -4,12 +4,11 @@ import { setTitle, updateSpace, setViewFormEditSpace, addSpace, setColor } from 
 import { store } from '../../redux/store'
 import CloseIcon from '@mui/icons-material/Close'
 import { displayMessage } from '../../redux/message/MessageSlice'
-import firebase from 'firebase'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../../utils/data'
-import { v4 as uuidv4 } from 'uuid';
+import firebase from 'firebase'
 
 export default function FormEditSpace() {
 
@@ -72,7 +71,7 @@ export default function FormEditSpace() {
                         await spaceDoc.update(newSpace)
                         .then((docRef)=>{
                             newSpace.id = docRef.id
-                            store.dispatch(addSpace(newSpace))    
+                            store.dispatch(updateSpace(newSpace))    
                             message = "Espace mis à jour avec succès !" 
                             typeMessage = "success"
                         })
@@ -80,12 +79,7 @@ export default function FormEditSpace() {
                             message = "Echec de la mise à jour de l'espace !" 
                             typeMessage = 'error'
                         })
-
-                        store.dispatch(updateSpace({
-                            title_space: title,
-                            id_space: spaceToEdit.id,
-                            color: color
-                        }))   
+                         
                         message = "Espace modifié avec succès !"    
                     }else{
                         let newSpace = {
