@@ -24,7 +24,6 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
 
     let taskElements = []
 
-    console.log(tasks)
     for(let task of tasks){
         if(task.arrayId.toString() === data.id.toString()){
             taskElements.push(<Task key={task.id} task={task} id_array={data.id} displayFormUpdateTask={displayFormUpdateTask} />)   
@@ -47,11 +46,8 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
         }}
         onDrop={(e)=>{
             e.stopPropagation()
-            console.log('drop')
             let id_task = e.dataTransfer.getData('id_task') // Id de la tache a déplacer
             let id_array_drop = data.id // id du nouveau tableau
-            console.log(e.dataTransfer.getData('id_task'))
-            console.log(e.dataTransfer.getData('id_array_drag'))
             if(e.dataTransfer.getData('id_task') !== undefined && e.dataTransfer.getData('id_task') !== null && e.dataTransfer.getData('id_task') !== ''){
                 store.dispatch(moveTask({
                     id_task, 
@@ -60,7 +56,7 @@ export default function Array({data, displayFormUpdateTask, displayFormArray}){
             if(e.dataTransfer.getData('id_array_drag') !== undefined && e.dataTransfer.getData('id_array_drag') !== null && e.dataTransfer.getData('id_array_drag') !== ''){
                 let id_array_drag = e.dataTransfer.getData('id_array_drag')
                 let order_array_drag = e.dataTransfer.getData('order_array_drag')
-                console.log('here')
+
                 store.dispatch(moveArray({
                     id_array_drag: id_array_drag, 
                     order_array_drag: order_array_drag, 

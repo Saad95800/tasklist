@@ -60,25 +60,6 @@ export default function FormAdd({addTable, closeFormAddArray}){
                             {/* étape 4 - Créer le code qui modifie le state en fonction de la valeur saisie par l'utilisateur */}
                             setTile(e.target.value) 
                         }} />
-                        {/* <Box sx={{ minWidth: 120 }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Space</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={spaceId}
-                                label="Age"
-                                onChange={(e)=>{
-                                    console.log(e.target.value)
-                                    setSpaceId(e.target.value)
-                                }}
-                                >
-                                {spaces.map((space)=>{
-                                    return <MenuItem value={space.id}>{space.title}</MenuItem>
-                                })}
-                                </Select>
-                            </FormControl>
-                        </Box> */}
                     <div className="form-group">
                         <input type="submit" className="btn btn-primary" value="Ajouter"/>
                     </div>

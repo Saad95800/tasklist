@@ -24,7 +24,7 @@ import { setTasks } from '../redux/task/TaskSlice'
 // On créer un composant par élément visuel
 export default function Container(){
 
-    useEffect(async ()=>{
+    useEffect(()=>{
  
         const getDataArray = async () => {
             let arrayRef = firebase.firestore().collection("array")

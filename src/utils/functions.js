@@ -104,7 +104,7 @@ request.onsuccess = function(event) {
 
 
 export const insertArrayIDB = (newArray) => {
-    console.log('here')
+
     let request = indexedDB.open("tasklist_db", 1);
 
     request.onsuccess = function(event) {
@@ -130,7 +130,7 @@ export const insertArrayIDB = (newArray) => {
 }
 
 export const deleteArrayIDB = (arrayId) => {
-console.log(arrayId)
+
     // Ouvrir la base de données
 var request = indexedDB.open("tasklist_db", 1);
 

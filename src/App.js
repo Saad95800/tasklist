@@ -26,7 +26,6 @@ function App() {
   }
 
   const checkPassword = () => {
-    console.log(sessionStorage.getItem('connected'))
     if(connected === '1'){
       return true
     }

@@ -13,19 +13,24 @@ import firebase from 'firebase'
 
 export default function SpaceList() {
 
-    useEffect(async ()=>{
+    useEffect(()=>{
 
-        let spaceRef = firebase.firestore().collection("space")
-        let spaces = []
-        await spaceRef.get().then((querySnapshot)=>{
+        const getSpacesData = async () => {
+            let spaceRef = firebase.firestore().collection("space")
+            let spaces = []
+            await spaceRef.get().then((querySnapshot)=>{
 
-            querySnapshot.forEach((space)=>{
-                spaces.push(space.data())
+                querySnapshot.forEach((space)=>{
+                    spaces.push(space.data())
+                })
+
             })
 
-        })
+            store.dispatch(setSpaces(spaces))
+        }
 
-        store.dispatch(setSpaces(spaces))
+        getSpacesData()
+        
 
     }, [])
 

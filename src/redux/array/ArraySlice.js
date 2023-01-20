@@ -93,8 +93,7 @@ export const ArraySlice = createSlice({
                         array.order = array.order - 1
                     }else if(Number(array.order) < Number(action.payload.order_array_drop) && Number(array.order) > Number(action.payload.order_array_drag)){
                         array.order = array.order - 1
-                    }   
-                    console.log(array) 
+                    }
                     // Si l'order du tableau de drop est inférieur à l'order du tableau de drag          
                 }else if(Number(action.payload.order_array_drop < Number(action.payload.order_array_drag))){
                     // le tableau qui a l'id id_array_drag prend le order order_array_drop
