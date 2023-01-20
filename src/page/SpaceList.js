@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import SpaceItem from '../component/space/SpaceItem'
 import FormEditSpace from '../component/space/FormEditSpace'
 import { store } from '../redux/store'
-import { setContextSpace, setViewFormEditSpace, deleteSpacesSelected, deleteSpace, setSpaces } from '../redux/space/SpaceSlice'
+import { setContextSpace, setViewFormEditSpace, deleteSpace, setSpaces } from '../redux/space/SpaceSlice'
 import { deleteArrays, deleteArraysSpacesSelected } from '../redux/array/ArraySlice'
 import PopinConfirmAction from '../component/PopinConfirmAction'
 import Box from '@mui/material/Box'
@@ -59,12 +59,29 @@ export default function SpaceList() {
             store.dispatch(setViewFormEditSpace(true))
         }}>Ajouter</div>
         <div className="btn btn-danger" onClick={()=>{
-            store.dispatch(deleteSpacesSelected())
-            store.dispatch(deleteArraysSpacesSelected(spacesToDelete))
-            store.dispatch(displayMessage({
-                texte: "Suppression en masse effectuée avec succès !",
-                typeMessage: 'success'
-            }))
+
+            //
+
+            let spaceRef = firebase.firestore().collection("space")
+
+            spacesToDelete.forEach(function(id){
+                let docRef = spaceRef.doc(id)
+                docRef.delete().then(()=>{
+                    console.log("L'espace d'id " + id + " a été supprimé avec succès")
+                    store.dispatch(deleteSpace(id))
+                    store.dispatch(displayMessage({
+                        texte: "Suppression en masse effectuée avec succès !",
+                        typeMessage: 'success'
+                    }))
+                })
+                .catch(function(){
+                    store.dispatch(displayMessage({
+                        texte: "La suppression de l'espace d'id " + id + " a écoué",
+                        typeMessage: 'error'
+                    }))
+                })
+            })
+            
         }}>Supprimer en masse</div>
         
         <Box>

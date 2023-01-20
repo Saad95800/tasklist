@@ -60,6 +60,27 @@ export default function FormEditSpace() {
                     let typeMessage = 'success'
                     // Code de modification du space
                     if(contextSpace === 'edit'){
+
+                        let newSpace = {
+                            id: spaceToEdit.id.toString(),
+                            title: title,
+                            color: color
+                        }
+
+                        let spaceRef = firebase.firestore().collection('space')
+                        let spaceDoc = spaceRef.doc(spaceToEdit.id.toString());
+                        await spaceDoc.update(newSpace)
+                        .then((docRef)=>{
+                            newSpace.id = docRef.id
+                            store.dispatch(addSpace(newSpace))    
+                            message = "Espace mis à jour avec succès !" 
+                            typeMessage = "success"
+                        })
+                        .catch(()=>{
+                            message = "Echec de la mise à jour de l'espace !" 
+                            typeMessage = 'error'
+                        })
+
                         store.dispatch(updateSpace({
                             title_space: title,
                             id_space: spaceToEdit.id,
@@ -78,6 +99,7 @@ export default function FormEditSpace() {
                             newSpace.id = docRef.id
                             store.dispatch(addSpace(newSpace))    
                             message = "Espace ajouté avec succès !" 
+                            typeMessage = 'success'
                         })
                         .catch(()=>{
                             message = "Echec de l'ajout de l'espace !" 

@@ -43,12 +43,6 @@ export const SpaceSlice = createSlice({
                     space.color = action.payload.color
                 }
             }
-            
-            updateSpaceIDB({
-                id: action.payload.id_space.toString(),
-                title: action.payload.title_space,
-                color: action.payload.color
-            })
 
             state.spaces = newSpaces
             state.viewFormEditSpace = false
@@ -73,8 +67,6 @@ export const SpaceSlice = createSlice({
                     spacesStorage.splice(index, 1)
                 }
             })
-            
-            deleteSpaceIDB(action.payload)
 
         },
         setSpacesToDelete: (state, action) => {

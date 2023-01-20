@@ -69,63 +69,6 @@ export const updatetaskFunc = (id_task, intitule, arrays) => {
     return newArrays
 }
 
-export const updateSpaceIDB = (space) => {
-
-    // Ouvrir la base de données
-    var request = indexedDB.open("tasklist_db", 1);
-
-    request.onsuccess = function(event) {
-    var db = event.target.result;
-
-    // Commencer une transaction en mode écriture
-    var transaction = db.transaction("space", "readwrite");
-
-    // Obtenir un accès à la table
-    var spaceStore = transaction.objectStore("space");
-
-    // Effectuer la requête de modification
-    var request = spaceStore.put(space);
-
-    request.onsuccess = function(event) {
-        console.log("Space modifié avec succès");
-    };
-
-    request.onerror = function(event) {
-        console.log("Une erreur est survenue lors de la modification du Space");
-    };
-    };
-
-}
-
-export const deleteSpaceIDB = (spaceId) => {
-
-    // Ouvrir la base de données
-var request = indexedDB.open("tasklist_db", 1);
-
-request.onsuccess = function(event) {
-  var db = event.target.result;
-
-  // Commencer une transaction en mode écriture
-  var transaction = db.transaction("space", "readwrite");
-
-  // Obtenir un accès à la table
-  var objectStore = transaction.objectStore("space");
-
-  // Effectuer la requête de suppression
-  var request = objectStore.delete(spaceId);
-
-  request.onsuccess = function(event) {
-    console.log("Space supprimé avec succès");
-  };
-
-  request.onerror = function(event) {
-    console.log("Une erreur est survenue lors de la suppression du Space");
-  };
-};
-
-
-}
-
 export const deleteSpacesIDB = (spacesId) => {
 
     // Ouvrir la base de données
