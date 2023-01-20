@@ -1,7 +1,7 @@
 import { Satellite } from '@mui/icons-material'
 import { createSlice } from '@reduxjs/toolkit'
 import produce from 'immer'
-import { addTaskFunc, deleteArrayIDB, deleteTaskFunc, getTaskById, insertArrayIDB, updatetaskFunc } from '../../utils/functions'
+import { addTaskFunc, deleteTaskFunc, getTaskById, insertArrayIDB, updatetaskFunc } from '../../utils/functions'
 import { v4 as uuidv4 } from 'uuid';
 
 // On crée ici tout nos states liées à l'affichage des messages
@@ -56,13 +56,12 @@ export const ArraySlice = createSlice({
         },
         deleteTable: (state, action) => {
 
-            deleteArrayIDB(action.payload.toString())
             // Pour supprimer un élément d'un state tableau, on crée d'abord un tableau vide
             let newArrays = []
 
             // On parcours le state en cours (liste de tableaux)
             for(let arr of state.arrays){
-                if(arr.id.toString() !== Number(action.payload.toString())){ // Si le tableau dans l'itération n'est pas celui qu'on veux supprimer, 
+                if(arr.id.toString() !== action.payload.toString()){ // Si le tableau dans l'itération n'est pas celui qu'on veux supprimer, 
                                             // on le met dans le tableau newArray
                     newArrays.push(arr)
                 }

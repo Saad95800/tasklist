@@ -129,35 +129,6 @@ export const insertArrayIDB = (newArray) => {
       };
 }
 
-export const deleteArrayIDB = (arrayId) => {
-
-    // Ouvrir la base de données
-var request = indexedDB.open("tasklist_db", 1);
-
-request.onsuccess = function(event) {
-  var db = event.target.result;
-
-  // Commencer une transaction en mode écriture
-  var transaction = db.transaction("array", "readwrite");
-
-  // Obtenir un accès à la table
-  var objectStore = transaction.objectStore("array");
-
-  // Effectuer la requête de suppression
-  var request = objectStore.delete(arrayId);
-
-  request.onsuccess = function(event) {
-    console.log("Tableau supprimé avec succès");
-  };
-
-  request.onerror = function(event) {
-    console.log("Une erreur est survenue lors de la suppression du Tableau");
-  };
-};
-
-
-}
-
 export const insertTaskIDB = (newTask) => {
 
     let request = indexedDB.open("tasklist_db", 1);

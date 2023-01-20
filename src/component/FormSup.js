@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styleModal } from '../utils/data'
+import firebase from 'firebase'
 
 export default function FormSup({arrays, closeFormDeleteArray}){
 // étape 1 - Créer le HTML statique du composant FormAdd
@@ -27,12 +28,30 @@ export default function FormSup({arrays, closeFormDeleteArray}){
         </Typography>
 
         <div>
-            <form className="forms" onSubmit={(e)=>{{/* étape 5 - Créer la fonction de validation de formulaire */}
+            <form className="forms" onSubmit={async (e)=>{ {/* étape 5 - Créer la fonction de validation de formulaire */}
                     e.preventDefault()
+
+                    let message = ''
+                    let typeMessage = 'success'
+                    let arrayRef = firebase.firestore().collection("array")
+                    let docRef = arrayRef.doc(idArray)
+
+                    await docRef.delete().then(()=>{
+                        console.log('then')
+                        message = "Tableau supprimé avec succès"
+                        typeMessage = "success"
+                        store.dispatch(deleteTable(idArray))
+                    }).catch((error)=>{
+                        console.log('catch')
+                        console.log(error)
+                        message = "Echec de la suppression du tableau"
+                        typeMessage = "error"
+                    })
+
                     {/* Dans cette fonction pour récupérer le titre l'id du tableau saisi par l'utilisateur, j'utilise le state idArray */}
                     {/* étape 6 - éxécuter la fonction qui se trouvera dans le composant parent (container) qui permettra de supprimer un tableau dans le state arrays */}
-                    store.dispatch(deleteTable(idArray))
-                    store.dispatch(displayMessage({texte:'Tableau supprimé avec succès !', typeMessage: 'success'}))
+                    
+                    store.dispatch(displayMessage({texte: message, typeMessage: typeMessage}))
                 }}>
                     <div className="form-group">
                         <label>Supprimer un tableau</label>
