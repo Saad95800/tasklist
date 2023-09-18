@@ -53,14 +53,17 @@ export default function FormAdd({addTable, closeFormAddArray}){
                         await arrayRef.add(newArray)
                         .then((docRef)=>{
                             newArray.id = docRef.id
-                                store.dispatch(addTable(newArray))
-                                message = "Tableau crée avec success !"
-                                typeMessage = 'success'
+                            store.dispatch(addTable(newArray))
+                            message = "Tableau crée avec success !"
+                            typeMessage = 'success'
+                            let arrayDoc = arrayRef.doc(docRef.id.toString());
+                            arrayDoc.update({id: docRef.id.toString()})
                         })
                         .catch(()=>{
                             message = "Echec lors de l'ajout du tableau"
                             typeMessage = 'error'
                         })
+                        
                         
                         store.dispatch(displayMessage({texte: message, typeMessage: typeMessage}))
                         store.dispatch(setDisplayFormAddArray(false))

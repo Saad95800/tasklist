@@ -1,8 +1,4 @@
-import { Satellite } from '@mui/icons-material'
 import { createSlice } from '@reduxjs/toolkit'
-import produce from 'immer'
-import { addTaskFunc, deleteTaskFunc, getTaskById, insertArrayIDB, updatetaskFunc } from '../../utils/functions'
-import { v4 as uuidv4 } from 'uuid';
 
 // On crée ici tout nos states liées à l'affichage des messages
 const initialState = {
@@ -28,13 +24,11 @@ export const ArraySlice = createSlice({
 
             // On ajoute à ce tableau un nouvel objet qui va contenir les infos saisies par l'utilisateur (title)
             let newArray = { 
-                id: uuidv4(),
+                id: action.payload.id,
                 title: action.payload.title,
                 order: state.arrays.length + 1,
                 spaceId: action.payload.spaceId
             }
-
-            insertArrayIDB(newArray)
             state.arrays.push(newArray)
            
             state.displayFormAddArray = false

@@ -13,7 +13,7 @@ export default function FormSup({arrays, closeFormDeleteArray}){
 // Composant n'a pas d'éléments dynamiques
 
 
-    const [idArray, setIdArray] = useState(1) // étape 2 - On crée un state par champs de formulaire
+    const [idArray, setIdArray] = useState(arrays[0].id) // étape 2 - On crée un state par champs de formulaire
 
     return (
         <Modal
@@ -41,6 +41,7 @@ export default function FormSup({arrays, closeFormDeleteArray}){
                         message = "Tableau supprimé avec succès"
                         typeMessage = "success"
                         store.dispatch(deleteTable(idArray))
+                        // setIdArray(arrays[0].id)
                     }).catch((error)=>{
                         console.log('catch')
                         console.log(error)
